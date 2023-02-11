@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MENU_ITEMS } from '../pages/pages-menu';
 @Component({
-  selector: 'ngx-admin',
-  templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.scss']
+  selector: 'ngx-student',
+  templateUrl: './student.component.html',
+  styleUrls: ['./student.component.scss']
 })
-export class AdminComponent implements OnInit {
+export class StudentComponent implements OnInit {
   menu = MENU_ITEMS;
   constructor() { }
 

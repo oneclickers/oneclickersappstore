@@ -20,10 +20,12 @@ import {
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
-import { AdminComponent } from './admin/admin.component';
+import { AdminModule } from './admin/admin.module';
+import { TutorModule } from './tutor/tutor.module';
+import { StudentModule } from './student/student.module';
 
 @NgModule({
-  declarations: [AppComponent, AdminComponent],
+  declarations: [AppComponent,],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -40,6 +42,9 @@ import { AdminComponent } from './admin/admin.component';
     }),
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
+    AdminModule,
+    TutorModule,
+    StudentModule
   ],
   bootstrap: [AppComponent],
 })

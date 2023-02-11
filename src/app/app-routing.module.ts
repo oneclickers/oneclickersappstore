@@ -10,43 +10,48 @@ import {
 } from '@nebular/auth';
 
 export const routes: Routes = [
+  { path: '', redirectTo: 'Student', pathMatch: 'full' },
   {
-    path: 'pages',
-    loadChildren: () => import('./pages/pages.module')
-      .then(m => m.PagesModule),
+    path:'Admin',loadChildren:()=>import('./admin/admin.module').then(LoadModule=>LoadModule.AdminModule)
   },
   {
-    path: 'auth',
-    component: NbAuthComponent,
-    children: [
-      {
-        path: '',
-        component: NbLoginComponent,
-      },
-      {
-        path: 'login',
-        component: NbLoginComponent,
-      },
-      {
-        path: 'register',
-        component: NbRegisterComponent,
-      },
-      {
-        path: 'logout',
-        component: NbLogoutComponent,
-      },
-      {
-        path: 'request-password',
-        component: NbRequestPasswordComponent,
-      },
-      {
-        path: 'reset-password',
-        component: NbResetPasswordComponent,
-      },
-    ],
+    path:'Tutor',loadChildren:()=>import('./tutor/tutor.module').then(LoadModule=>LoadModule.TutorModule)
   },
-  { path: '', redirectTo: 'pages', pathMatch: 'full' },
-  { path: '**', redirectTo: 'pages' },
+  {
+    path:'Student',loadChildren:()=>import('./student/student.module').then(LoadModule=>LoadModule.StudentModule)
+  },
+  // { path: '**', redirectTo: 'pages' },
+  // {
+  //   path: 'auth',
+  //   component: NbAuthComponent,
+  //   children: [
+  //     {
+  //       path: '',
+  //       component: NbLoginComponent,
+  //     },
+  //     {
+  //       path: 'login',
+  //       component: NbLoginComponent,
+  //     },
+  //     {
+  //       path: 'register',
+  //       component: NbRegisterComponent,
+  //     },
+  //     {
+  //       path: 'logout',
+  //       component: NbLogoutComponent,
+  //     },
+  //     {
+  //       path: 'request-password',
+  //       component: NbRequestPasswordComponent,
+  //     },
+  //     {
+  //       path: 'reset-password',
+  //       component: NbResetPasswordComponent,
+  //     },
+  //   ],
+  // },
+ 
 ];
 
 const config: ExtraOptions = {
