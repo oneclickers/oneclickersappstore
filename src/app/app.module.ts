@@ -23,9 +23,12 @@ import {
 import { AdminModule } from './admin/admin.module';
 import { TutorModule } from './tutor/tutor.module';
 import { StudentModule } from './student/student.module';
+import { ProfileSettingComponent } from './shard-Component/profile-setting/profile-setting.component';
+import { AppearanceSettingComponent } from './shard-Component/appearance-setting/appearance-setting.component';
+import { LanguageSettingComponent } from './shard-Component/language-setting/language-setting.component';
 
 @NgModule({
-  declarations: [AppComponent,],
+  declarations: [AppComponent, ProfileSettingComponent, AppearanceSettingComponent, LanguageSettingComponent,],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
