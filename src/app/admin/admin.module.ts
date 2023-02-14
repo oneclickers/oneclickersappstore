@@ -12,6 +12,7 @@ import { AppearanceSettingComponent } from './setting-component/appearance-setti
 import { ProfileSettingComponent } from './setting-component/profile-setting/profile-setting.component';
 import { NotificationSettingComponent } from './setting-component/notification-setting/notification-setting.component';
 import { SettingModule } from './setting-component/setting.module';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 const routes:Routes=[
   {
@@ -40,6 +41,7 @@ const routes:Routes=[
     NbCardModule,
     NbTabsetModule,
     SettingModule,
+    Ng2SearchPipeModule,
     RouterModule.forChild(routes)
   ]
 })

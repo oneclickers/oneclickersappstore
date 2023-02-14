@@ -6,7 +6,7 @@ import { LanguageSettingComponent } from './language-setting/language-setting.co
 import { NotificationSettingComponent } from './notification-setting/notification-setting.component';
 import { ProfileSettingComponent } from './profile-setting/profile-setting.component';
 import { RouterModule, Routes } from '@angular/router';
-import { NbButtonModule, NbCardModule, NbCheckboxModule, NbIconModule, NbInputModule, NbMenuModule, NbTabsetModule } from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbCheckboxModule, NbIconModule, NbInputModule, NbMenuModule, NbTabsetModule, NbToggleModule } from '@nebular/theme';
 import { ThemeModule } from '../../@theme/theme.module';
 
 const routes:Routes=[
@@ -51,7 +51,8 @@ const routes:Routes=[
     NbIconModule,
     NbInputModule,
     NbCheckboxModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    NbToggleModule,
   ]
 })
 export class SettingModule { }

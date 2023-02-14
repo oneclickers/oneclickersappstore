@@ -18,6 +18,7 @@ import {
   NbMenuModule,
   NbSidebarModule,
   NbToastrModule,
+  NbToggleModule,
   NbWindowModule,
 } from '@nebular/theme';
 import { AdminModule } from './admin/admin.module';
@@ -43,6 +44,7 @@ import { LanguageSettingComponent } from './shard-Component/language-setting/lan
     NbChatModule.forRoot({
       messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
     }),
+    NbToggleModule,
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
     AdminModule,
