@@ -10,7 +10,7 @@ import {
 } from '@nebular/auth';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'Student', pathMatch: 'full' },
+  { path: '', redirectTo: 'Admin', pathMatch: 'full' },
   {
     path:'Admin',loadChildren:()=>import('./admin/admin.module').then(LoadModule=>LoadModule.AdminModule)
   },
