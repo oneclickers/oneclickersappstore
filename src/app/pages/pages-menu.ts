@@ -7,6 +7,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/Admin/Dashboard',
   },
   {
+    title: 'Chat Part',
+    icon: 'message-circle-outline',
+    link: '/Admin/Message',
+  },
+  {
     title: 'Setting',
     icon: 'settings-outline',
     link: '/Admin/Setting',

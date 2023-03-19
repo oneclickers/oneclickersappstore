@@ -9,21 +9,20 @@ import { NbMenuModule, NbMenuService } from '@nebular/theme';
   
 })
 export class SettingComponentComponent implements OnInit {
-  setting_Menu:NbMenuModule=[];
-  router_Name:any=[]
+  public setting_Menu:NbMenuModule=[];
+  public router_Name:any=[]
   constructor(
     private router:Router,
     private menuService:NbMenuService,
    
     ) {
-   this.setPageHeader()  
-   this.menuService.onItemClick().subscribe((event) => {
-    this.setPageHeader()
-    console.log('logout clicked');
-    if (event.item.title === 'Log out') {
-    console.log('logout clicked');
-    }
-    });
+  //  this.menuService.onItemClick().subscribe((event) => {
+  //   this.setPageHeader()
+  //   console.log('logout clicked');
+  //   if (event.item.title === 'Log out') {
+  //   console.log('logout clicked');
+  //   }
+  //   });
    }
 
   ngOnInit(): void {
@@ -50,20 +49,9 @@ export class SettingComponentComponent implements OnInit {
       },
     ]
   }
-setPageHeader(){
 
-  console.log('setpageHeader',this.router_Name);
-  
+setPageHeader()
+{
   this.router_Name=this.router.url.split('/')
-  this.router_Name=this.router_Name.splice(2,3)
-  // this.cd.detectChanges()
-}
-// navigate(index:number){
-//   this.setPageHeader()
-//   console.log('navigate',index,`/Admin/${this.router_Name[index]}`);
-//    this.router.navigate([`/Admin/${this.router_Name[index]}`]);
- 
- 
-   
-// }
-}
+  this.router_Name=this.router_Name.splice(2,3)  
+}}

@@ -3,7 +3,14 @@
     <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
       <nb-icon icon="menu-2-outline"></nb-icon>
     </a>
-    <a class="logo" href="#" (click)="navigateHome()"><span>admin</span></a>
+    <a class="logo" href="#" (click)="navigateHome()"><span>{{this.userRolInfo}}</span>
+      <span>
+        <span *ngIf="this.userRolInfo=='Admin'"><i  class='bx bxs-universal-access'></i></span>
+        <span *ngIf="this.userRolInfo=='Tutor'"><i class='bx bxs-user-voice'></i></span>
+        <span *ngIf="this.userRolInfo=='Student'"><i class='bx bxs-user'></i></span>
+      </span>
+      
+    </a>
   </div>
   <!-- <nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
     <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
@@ -23,8 +30,8 @@
     <!-- <nb-action class="control-item">
       <nb-search type="rotate-layout"></nb-search>
     </nb-action> -->
-    <nb-action class="control-item" icon="edit-2-outline"></nb-action>
-    <nb-action class="control-item" icon="message-circle-outline"></nb-action>
+    <nb-action class="control-item" [nbContextMenu]="noteBad" icon="edit-2-outline"></nb-action>
+    <nb-action class="control-item"  [nbContextMenu]="message" icon="message-circle-outline"></nb-action>
     <nb-action class="control-item" icon="email-outline"></nb-action>
     <nb-action class="control-item" icon="bell-outline"></nb-action>
     <!-- <nb-action class="user-action" *nbIsGranted="['view', 'user']" >

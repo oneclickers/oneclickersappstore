@@ -1,0 +1,30 @@
+<nb-card>
+    <nb-card-header style="border-bottom:1px solid #dee2e6;">
+        <div class="row p-0">
+            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                <h6>{{title}}</h6>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 text-right">
+                <nb-icon (click)="close()" style="font-size: 37px; cursor: pointer;color: rgb(78, 82, 70);"
+                    icon="close-square-outline"></nb-icon>
+            </div>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <div style="min-width: 600px;" class="container bootdey">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="well">
+                        <h6 style="text-align: center; color: brown;">{{CPMessage}}</h6>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </nb-card-body>
+<nb-card-footer  style="border-top:1px solid #dee2e6;">
+    <div class="text-right">
+        <button type="submit" (click)="OnSubmit()" nbButton hero status="danger">Delete</button>
+    </div>
+</nb-card-footer>
+</nb-card>

@@ -55,4 +55,10 @@ const routes:Routes=[
     NbToggleModule,
   ]
 })
-export class SettingModule { }
+export class SettingModule {
+  constructor(){
+    console.log("settingmodule");
+  }
+ 
+  
+ }

@@ -6,7 +6,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule ,HTTP_INTERCEPTORS} from '@angular/common/http';
 import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
@@ -17,6 +17,7 @@ import {
   NbDialogModule,
   NbMenuModule,
   NbSidebarModule,
+  NbStepperModule,
   NbToastrModule,
   NbToggleModule,
   NbWindowModule,
@@ -27,9 +28,14 @@ import { StudentModule } from './student/student.module';
 import { ProfileSettingComponent } from './shard-Component/profile-setting/profile-setting.component';
 import { AppearanceSettingComponent } from './shard-Component/appearance-setting/appearance-setting.component';
 import { LanguageSettingComponent } from './shard-Component/language-setting/language-setting.component';
+import { NotePadModule } from './admin/note-pad/note-pad.module';
+import { ApiHandlerInterceptor } from './Service/interceptors/api-handler.interceptor';
+import { PopupComponentComponent } from './popup/popup-component/popup-component.component';
+import { PopupComponentModule } from './popup/popup-component/popup-component.module';
+import { CreateAccountComponent } from './create-account/create-account.component';
 
 @NgModule({
-  declarations: [AppComponent, ProfileSettingComponent, AppearanceSettingComponent, LanguageSettingComponent,],
+  declarations: [AppComponent, PopupComponentComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -49,8 +55,17 @@ import { LanguageSettingComponent } from './shard-Component/language-setting/lan
     ThemeModule.forRoot(),
     AdminModule,
     TutorModule,
-    StudentModule
+    StudentModule,
+    NotePadModule,
+    PopupComponentModule,
+    NbStepperModule
+
   ],
+  providers:[ {
+    provide: HTTP_INTERCEPTORS,
+    useClass: ApiHandlerInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent],
 })
 export class AppModule {

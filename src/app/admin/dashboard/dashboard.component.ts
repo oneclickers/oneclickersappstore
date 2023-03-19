@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserServiceService } from '../../Service/user-service.service';
 
 @Component({
   selector: 'ngx-dashboard',
@@ -10,7 +11,14 @@ export class DashboardComponent implements OnInit {
   router_Name:any=[]
   constructor(
     private router:Router,
-  ) { }
+    private userService:UserServiceService
+  ) { 
+
+    this.userService.getUsers().subscribe((res:any)=>{
+      console.log("gerUsers",res);
+      
+     })
+  }
 
   ngOnInit(): void {
     this.setPageHeader()

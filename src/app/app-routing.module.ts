@@ -8,9 +8,13 @@ import {
   NbRequestPasswordComponent,
   NbResetPasswordComponent,
 } from '@nebular/auth';
+import { AdminModule } from './admin/admin.module';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'Admin', pathMatch: 'full' },
+  
+  {
+    path:'',loadChildren:()=>import('./create-account/create-account.module').then(LoadModule=>LoadModule.CreateAccountModule)
+  },
   {
     path:'Admin',loadChildren:()=>import('./admin/admin.module').then(LoadModule=>LoadModule.AdminModule)
   },
@@ -20,47 +24,18 @@ export const routes: Routes = [
   {
     path:'Student',loadChildren:()=>import('./student/student.module').then(LoadModule=>LoadModule.StudentModule)
   },
-  // { path: '**', redirectTo: 'pages' },
-  // {
-  //   path: 'auth',
-  //   component: NbAuthComponent,
-  //   children: [
-  //     {
-  //       path: '',
-  //       component: NbLoginComponent,
-  //     },
-  //     {
-  //       path: 'login',
-  //       component: NbLoginComponent,
-  //     },
-  //     {
-  //       path: 'register',
-  //       component: NbRegisterComponent,
-  //     },
-  //     {
-  //       path: 'logout',
-  //       component: NbLogoutComponent,
-  //     },
-  //     {
-  //       path: 'request-password',
-  //       component: NbRequestPasswordComponent,
-  //     },
-  //     {
-  //       path: 'reset-password',
-  //       component: NbResetPasswordComponent,
-  //     },
-  //   ],
-  // },
+
  
 ];
 
-const config: ExtraOptions = {
-  useHash: false,
-};
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, config)],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {
+  constructor(){
+    console.log("appmodule");
+    
+  }
 }

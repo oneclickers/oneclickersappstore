@@ -1,0 +1,146 @@
+
+<nb-layout>
+<nb-layout-column>
+    <nb-card size="medium">
+        <nb-card-body>
+          <!-- <div class="p-3 pt-0">
+            <h2 style="font-weight: bolder;font-size: 25px;color: #6c757d !important;" class="text-secondary form-label">Register</h2>
+          </div> -->
+          <nb-stepper #stepper orientation="vertical">
+            <nb-step label="First step">
+              <h4 class="pt-0 mt-0">Personal Info</h4>
+              <div class="container-fluid">
+                <div class="col-12">
+                  <div class="form-group">
+                    <label class="form-label">Name <span class="text-danger">*</span></label>
+                    <input type="text" nbInput fullWidth formControlName="email_Id" class="form-control" placeholder="" aria-label="Last name"
+                      value="Doe" >
+                    <!-- <div *ngIf="formSubmitted && formStatus.email_Id.errors ">
+                      <div *ngIf="formSubmitted&&formStatus.email_Id.errors.required" class="text-info pt-1">user name is required</div>
+                    </div> -->
+                  </div>
+                </div>
+                
+              </div>
+              <button nbButton disabled nbStepperNext>prev</button>
+              <button nbButton nbStepperNext>next</button>
+            </nb-step>
+            <nb-step label="Second step" >
+              <div class="p-3">
+                <h2 style="font-weight: bolder;font-size: 25px;color: #6c757d !important;" class="text-secondary form-label">Register</h2>
+              </div>
+              <h4>Step content #2</h4>
+              <p class="lorem">
+                Proin varius accumsan semper. Praesent consequat tincidunt sagittis. Curabitur egestas sem a ipsum bibendum,
+                sit amet fringilla orci efficitur. Nam bibendum lectus ut viverra tristique. Fusce eu pulvinar magna, quis
+                viverra ex. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent metus turpis, commodo vel
+                placerat quis, lobortis in ligula.
+              </p>
+              <p class="lorem">
+                Curabitur luctus mattis risus nec condimentum. Donec at dui turpis. Sed vehicula fringilla rutrum. Nullam
+                sed ornare magna. Mauris vitae laoreet diam. Mauris fermentum ligula at lacinia semper. Nulla placerat dui
+                eu sapien pellentesque, eu placerat leo luctus. Cras pharetra blandit fermentum.
+              </p>
+              <button nbButton nbStepperPrevious>prev</button>
+              <button nbButton nbStepperNext>next</button>
+            </nb-step>
+            <nb-step  label="Third step">
+              <div class="p-3">
+                <h2 style="font-weight: bolder;font-size: 25px;color: #6c757d !important;" class="text-secondary form-label">Register</h2>
+              </div>
+              <h4>Step content #3</h4>
+              <p class="lorem">
+                Proin varius accumsan semper. Praesent consequat tincidunt sagittis. Curabitur egestas sem a ipsum bibendum,
+                sit amet fringilla orci efficitur. Nam bibendum lectus ut viverra tristique. Fusce eu pulvinar magna, quis
+                viverra ex. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent metus turpis, commodo vel
+                placerat quis, lobortis in ligula.
+              </p>
+              <p class="lorem">
+                Curabitur luctus mattis risus nec condimentum. Donec at dui turpis. Sed vehicula fringilla rutrum. Nullam
+                sed ornare magna. Mauris vitae laoreet diam. Mauris fermentum ligula at lacinia semper. Nulla placerat dui
+                eu sapien pellentesque, eu placerat leo luctus. Cras pharetra blandit fermentum.
+              </p>
+              <button nbButton nbStepperPrevious>prev</button>
+              <button nbButton nbStepperNext>next</button>
+            </nb-step>
+            <nb-step  [hidden]="true" label="Third step">
+              <div class="p-3">
+                <h2 style="font-weight: bolder;font-size: 25px;color: #6c757d !important;" class="text-secondary form-label">Register</h2>
+              </div>
+              <h4>Step content #4</h4>
+              <p class="lorem">
+                Proin varius accumsan semper. Praesent consequat tincidunt sagittis. Curabitur egestas sem a ipsum bibendum,
+                sit amet fringilla orci efficitur. Nam bibendum lectus ut viverra tristique. Fusce eu pulvinar magna, quis
+                viverra ex. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent metus turpis, commodo vel
+                placerat quis, lobortis in ligula.
+              </p>
+              <p class="lorem">
+                Curabitur luctus mattis risus nec condimentum. Donec at dui turpis. Sed vehicula fringilla rutrum. Nullam
+                sed ornare magna. Mauris vitae laoreet diam. Mauris fermentum ligula at lacinia semper. Nulla placerat dui
+                eu sapien pellentesque, eu placerat leo luctus. Cras pharetra blandit fermentum.
+              </p>
+              <button nbButton nbStepperPrevious>prev</button>
+              <button nbButton nbStepperNext>next</button>
+            </nb-step>
+
+          </nb-stepper>
+        </nb-card-body>
+      </nb-card>
+<!-- <nb-card class="shadow-lg col-12 col-xl-10 col-lg-10 col-md-10 col-sm-12 m-auto" style="margin-top: 35px;">
+    <nb-card-body>
+              <div class="p-3">
+                <h2 style="font-weight: bolder;font-size: 25px;color: #6c757d !important;" class="text-secondary form-label">Register</h2>
+              </div>
+      <nb-stepper #stepper>
+        <nb-step [stepControl]="firstForm" label="First step">
+          <form [formGroup]="firstForm" (ngSubmit)="onFirstSubmit()" class="step-container">
+            <p class="lorem">
+              Lorizzle ipsum dolizzle stuff fizzle, consectetuer adipiscing break it down. Nullizzle sapien velizzle,
+              my shizz pimpin', shizzle my nizzle crocodizzle shut the shizzle up, gravida vizzle, dang.
+            </p>
+            <div class="input-group">
+              <input nbInput type="text" placeholder="Enter your name" class="form-control" formControlName="firstCtrl"
+                     [ngClass]="{'form-control-danger': firstForm.invalid && (firstForm.dirty || firstForm.touched)}">
+            </div>
+            <button nbButton nbStepperNext>next</button>
+          </form>
+        </nb-step>
+        <nb-step [stepControl]="secondForm" label="Second step">
+          <form [formGroup]="secondForm" (ngSubmit)="onSecondSubmit()" class="step-container">
+            <p class="lorem">
+              Pellentesque we gonna chung tortor.
+              Sizzle pizzle. Fizzle izzle dolor dapibus fo shizzle mah nizzle fo rizzle, mah home g-dizzle tempus tempor.
+              Maurizzle cool nibh owned turpizzle. My shizz fo shizzle tortor.
+            </p>
+            <div class="input-group">
+              <input nbInput type="text" placeholder="Enter favorite movie" class="form-control" formControlName="secondCtrl"
+                     [ngClass]="{'form-control-danger': secondForm.invalid && (secondForm.dirty || secondForm.touched)}">
+            </div>
+            <button nbButton nbStepperPrevious>prev</button>
+            <button nbButton nbStepperNext>next</button>
+          </form>
+        </nb-step>
+        <nb-step [stepControl]="thirdForm" label="Third step">
+          <form [formGroup]="thirdForm" (ngSubmit)="onThirdSubmit()" class="step-container">
+            <p class="lorem">
+              Things boom shackalack rhoncus yo. In fo shizzle my nizzle gangsta platea dictumst. Check it out pot.
+            </p>
+            <div class="input-group">
+              <input nbInput type="text" placeholder="Enter something" class="form-control" formControlName="thirdCtrl"
+                     >
+            </div>
+            <button nbButton nbStepperPrevious>prev</button>
+            <button nbButton nbStepperNext>Confirm</button>
+          </form>
+        </nb-step>
+        <nb-step [stepControl]="thirdForm" [hidden]="true" label="Third step">
+          <div class="step-container">
+            <h3>Wizard completed!</h3>
+            <button nbButton (click)="stepper.reset()">Try again</button>
+          </div>
+        </nb-step>
+      </nb-stepper>
+    </nb-card-body>
+  </nb-card> -->
+</nb-layout-column>
+</nb-layout>

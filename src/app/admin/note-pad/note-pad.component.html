@@ -1,0 +1,13 @@
+<nb-card class="shadow pb-0 mb-1 p-3 bg-white rounded mt-0">
+    <h4 class="p-0 m-0 d-flex">
+        <span class="d-flex" *ngFor="let routerName of this.router_Name;let i=index">
+            <span  >
+                <span *ngIf="i!=0" class="pl-1 pr-1">|</span>
+                <span [ngClass]="i==1? 'text-primary':'text-secondary'">{{routerName}}</span>
+            </span>
+        </span>
+    </h4>
+</nb-card>
+<nb-card style="min-height: 75vh; max-height: 75vh;overflow-y:hidden;">
+        <router-outlet (activate)="setPageHeader()"></router-outlet>
+</nb-card>

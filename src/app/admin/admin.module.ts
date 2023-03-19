@@ -1,39 +1,45 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule, Routes } from '@angular/router';
-
 import { AdminComponent } from './admin.component';
 import { ThemeModule } from '../@theme/theme.module';
-import { NbCardModule, NbMenuModule, NbTabsetModule } from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbDialogModule, NbIconModule, NbLayoutModule, NbMenuModule, NbTabsetModule, NbToastrModule, NbWindowModule } from '@nebular/theme';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { SettingComponentComponent } from './setting-component/setting-component.component';
-import { LanguageSettingComponent } from './setting-component/language-setting/language-setting.component';
-import { AppearanceSettingComponent } from './setting-component/appearance-setting/appearance-setting.component';
-import { ProfileSettingComponent } from './setting-component/profile-setting/profile-setting.component';
-import { NotificationSettingComponent } from './setting-component/notification-setting/notification-setting.component';
 import { SettingModule } from './setting-component/setting.module';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-
+import { ChatPartComponent } from './chat-part/chat-part.component';
+import { NotePadComponent } from './note-pad/note-pad.component';
+import { CKEditorModule } from 'ng2-ckeditor';
+import { UpdateBasicInfoComponent } from './update-basic-info/update-basic-info.component';
 const routes:Routes=[
   {
     path:'',
     component:AdminComponent,
     children:[
       {
-        path:'',redirectTo:'Dashboard',pathMatch:'full'
+        path:'',redirectTo:'Dashboard',pathMatch:'full',
       },
       {
-        path:'Dashboard',component:DashboardComponent
+        path:'Dashboard',component:DashboardComponent,
+      },
+      {
+        path:'Message',component:ChatPartComponent,
+      },
+      {
+        path:'BasicInfo',component:UpdateBasicInfoComponent,
       },
       {
         path:'Setting',loadChildren:()=>import('./setting-component/setting.module').then(LoadModule=>LoadModule.SettingModule)
+      },
+      {
+        path:'Notepad',loadChildren:()=>import('./note-pad/note-pad.module').then(LoadModule=>LoadModule.NotePadModule)
       }
     ]
   }
 ]
 
 @NgModule({
-  declarations: [AdminComponent, DashboardComponent],
+  declarations: [AdminComponent, DashboardComponent, ChatPartComponent, UpdateBasicInfoComponent],
   imports: [
     CommonModule,
     ThemeModule,
@@ -42,7 +48,19 @@ const routes:Routes=[
     NbTabsetModule,
     SettingModule,
     Ng2SearchPipeModule,
-    RouterModule.forChild(routes)
+    NbLayoutModule,
+    RouterModule.forChild(routes),
+    // CKEditorModule
+    NbButtonModule,
+    NbIconModule,
+    NbToastrModule.forRoot(),
+    NbWindowModule.forRoot(),
+    NbDialogModule
   ]
 })
-export class AdminModule { }
+export class AdminModule { 
+  constructor(){
+    console.log("adminmodule11");
+    
+  }
+}
