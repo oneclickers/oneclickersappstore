@@ -1,0 +1,268 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var app = require('../app');
+var debug = require('debug')('nodeserver:server');
+var http = require('http');
+var DB = require("../databaseConnection");
+/**
+ * Get port from environment and store in Express.
+ */
+
+var port = normalizePort(process.env.PORT || '3200');
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+
+var server = http.createServer(app);
+
+
+const io = require('socket.io')(server, {
+  cors: {
+    origin: '*',
+  }
+});
+
+// const socketApi={
+//     io:io
+// }
+// console.log('called')
+io.on('connection', (socket) => {
+
+  console.log('called')
+  socket.on('getChatMemberList', (userInfo) => {
+    var senderId = userInfo;
+
+    console.log('userid', userInfo);
+    var Query = `SELECT * from message where sender_Id=${userInfo} || receiver_id=${userInfo}`
+    DB.query(Query, (err, result) => {
+      if (err) { console.log("errorresponse", err); }
+      else {
+        console.log("messagetable", result);
+
+        if (result.length > 0) {
+          var memberList = [];
+          var i
+          var testUser=[]
+          var test=[]
+          result.forEach((element) => {
+            var Query1 = `Select * from users where user_Id=${element.sender_Id} ||user_Id=${element.receiver_id}`
+            DB.query(Query1, (err, result1) => {
+              if (err) { console.log("errorresponse", err); }
+              else {
+                if (testUser.length>0) {
+                  if (testUser.findIndex((data)=>data!=result1[0].user_Id)===-1) {
+
+                    console.log('memberList data');
+                    memberList.push(
+                      {
+                        name: result1[0].name,
+                        id: result1[0].user_Id,
+                        photo: result1[0].photo
+                      }
+                    )
+                  }
+                 
+                }else{
+                  console.log("test",result1);
+                  if (result1[0].user_Id!=userInfo) {
+                    testUser.push(result1[0].user_Id) 
+                    memberList.push(
+                      {
+                        name: result1[0].name,
+                        id: result1[0].user_Id,
+                        photo: result1[0].photo
+                      }
+                    )
+                    console.log("testOne",testUser);
+                  }
+                }
+
+               
+              }
+            })
+          }); 
+          io.emit('getChatMemberList', memberList);
+          // for(i = 0; i < result.length; i++) {
+          //   var Query1 = `Select * from users where user_Id=${result[i].receiver_id}`
+          //   DB.query(Query1, (err, result1) => {
+          //     if (err) { console.log("errorresponse", err); }
+          //     else {
+          //       if (testUser.length>0) {
+          //         if (testUser.findIndex((data)=>data===result1[0].user_Id)===-1) {
+          //           memberList.push(
+          //             {
+          //               name: result1[0].name,
+          //               id: result1[0].user_Id,
+          //               photo: result1[0].photo
+          //             }
+          //           )
+          //         }
+                 
+          //       }else{
+          //         if (result1[0].user_Id!=userInfo) {
+          //           testUser.push(result1[0].user_Id) 
+          //           memberList.push(
+          //             {
+          //               name: result1[0].name,
+          //               id: result1[0].user_Id,
+          //               photo: result1[0].photo
+          //             }
+          //           )
+          //           console.log("testOne",testUser);
+          //         }
+          //       }
+
+          //       if (i === result.length) {
+          //         io.emit('getChatMemberList', memberList);
+          //       }
+
+          //     }
+          //   })
+          // }
+
+        }
+      }
+    })
+
+  });
+
+  socket.on('disconnect', function () {
+    io.emit('usersActivity', {
+      user: socket.username,
+      event: 'chatLeft'
+    });
+  });
+
+  socket.on('setUserName', (name) => {
+    socket.username = name;
+    io.emit('usersActivity', {
+      user: name,
+      event: 'chatJoined'
+    });
+  });
+
+
+
+  socket.on('getChat', (info) => {
+    console.log(info);
+    var Query = `select * from message  where sender_Id=${info.sender_Id} && receiver_id=${info.receiver_id} || sender_Id=${info.receiver_id} && receiver_id=${info.sender_Id} order by id`
+    DB.query(Query, (err, result) => {
+      if (err) { console.log("errorresponse", err); }
+      else {
+        console.log("messag", result);
+        io.emit('getChat', result);
+      }
+    })
+
+  });
+
+  socket.on('message', (messages) => {
+    console.log(messages);
+    var Query = `insert into message(message,files,sender_Id,receiver_id,view_Status,date) value ('${messages.message}','${null}',${messages.senderID},${messages.receiverID},${messages.view_Status},'${'2008-11-11'}')`
+    DB.query(Query, (err, result) => {
+      if (err) { console.log("errorresponse", err); }
+      else {
+        messages.date = new Date()
+        io.emit('message', messages);
+      }
+
+    })
+
+  });
+
+  // io.on('sendTheMessage', (message) => {
+  //   console.log("new message",message);
+  //   io.emit('message', {
+  //     msg: message.text,
+  //     user: socket.username,
+  //     createdAt: new Date()
+  //   });
+  // });
+
+  socket.on("private message", (anotherSocketId, msg) => {
+    socket.to(anotherSocketId).emit("private message", socket.id, msg);
+  });
+
+});
+
+// io.on('sendTheMessage', (message) => {
+//   console.log("new message",message);
+//   io.emit('message', {
+//     msg: message.text,
+//     user: socket.username,
+//     createdAt: new Date()
+//   });
+// });
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}
