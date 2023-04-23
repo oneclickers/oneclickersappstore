@@ -1,11 +1,11 @@
-<nb-card>
+<nb-card class="shadow">
     <nb-card-body>
 
-        <nb-tabset>
+        <nb-tabset >
             <nb-tab tabTitle="Users Roll" tabIcon="person-outline" responsive class="pl-0 pr-0">
-                <div class="container bootstrap snippets bootdey">
+                <div class="container bootstrap snippets bootdey ">
                     <div class="table-responsive">
-                        <table class="table colored-header datatable project-list" style="border: 2px solid #dee2e6;">
+                        <table class="table colored-header datatable project-list shadow" >
                             <thead>
                                 <tr>
                                     <th>Title</th>
@@ -17,17 +17,17 @@
                                 </tr>
                             </thead>
                             <tbody style="text-align: left;">
-                                <tr *ngFor="let roll of this.userRoll">
+                                <tr class="shadow" *ngFor="let roll of this.userRoll">
                                     <td><a href="">{{roll.roll_Name}}</a></td>
                                     <td>{{roll.roll_Id}}</td>
                                     <td>{{roll.created_Date}}</td>
                                     <td>{{roll.updated_Date}}</td>
                                     <td  class="text-success"><span>{{ roll.is_Active==1?'ACTIVE':'INACTIVE'}}</span></td>
                                     <td>
-                                        <nb-button-group style="height: 30px;">
-                                            <button (click)="editExistsRoll(roll)" nbButton hero status="primary"><nb-icon
+                                        <nb-button-group style="height: 30px; " class="shadow">
+                                            <button (click)="editExistsRoll(roll)" class="shadow"  nbButton hero status="primary"><nb-icon
                                                     icon="edit-outline"></nb-icon></button>
-                                            <button (click)="deleteRoll(roll.roll_Id,roll.roll_Name)" nbButton hero status="danger"><nb-icon
+                                            <button (click)="deleteRoll(roll.roll_Id,roll.roll_Name)" class="shadow" nbButton hero status="danger"><nb-icon
                                                     icon="trash-outline"></nb-icon></button>
                                         </nb-button-group>
                                     </td>
@@ -37,7 +37,7 @@
                     </div>
 
                     <div class="text-right">
-                        <button nbButton hero status="success" (click)="addNewRoll()"><nb-icon icon="plus-outline"></nb-icon>ADD NEW ROLL</button>
+                        <button nbButton hero class="shadow" status="success" (click)="addNewRoll()"><nb-icon icon="plus-outline"></nb-icon>ADD NEW ROLL</button>
                     </div>
                 </div>
             </nb-tab>

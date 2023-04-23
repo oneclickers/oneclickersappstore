@@ -9,7 +9,7 @@ import { UserServiceService } from '../../../Service/user-service.service';
 })
 export class ConfirmationPopupComponent implements OnInit {
 @Input() title:any;
-@Input() roll_Id:any
+@Input() id:any
 @Input() CPMessage:any
   constructor(
     private dialog:NbDialogRef<ConfirmationPopupComponent>,
@@ -20,12 +20,16 @@ export class ConfirmationPopupComponent implements OnInit {
   ngOnInit(): void {
   }
   close(){
-    this.dialog.close()
+    var data:any={
+      action:false,
+   
+    }
+    this.dialog.close(data)
   }
   OnSubmit(){
-    console.log("datelet",this.roll_Id);
+    console.log("datelet",this.id);
     
-    this.userService.deleteUserRoll(this.roll_Id).subscribe((res:any)=>{
+    this.userService.deleteUserRoll(this.id).subscribe((res:any)=>{
       if(res.statuscode===200){
         this.message.success('Success',res.message,{
           status:'success'
@@ -37,6 +41,10 @@ export class ConfirmationPopupComponent implements OnInit {
         })
       }
     })
-    this.dialog.close()
+    var data:any={
+      action:true,
+      id:this.id
+    }
+    this.dialog.close(data)
   }
 }

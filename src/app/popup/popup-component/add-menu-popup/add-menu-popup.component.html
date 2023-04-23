@@ -1,0 +1,23 @@
+<nb-card class="p-0 m-0 ">
+   
+        <div class="container-fluid">
+            <form [formGroup]="addNewMenuForm" (ngSubmit)="onSubmit()">
+                <label>Title</label>
+                <div style="padding:14px;" class="form-group">
+                    <input formControlName="title" placeholder="Update your status"
+                        [ngClass]="{ 'invalid': formSubmitted && formStatus.title.errors }"
+                        class="form-control">
+                    <div *ngIf="formSubmitted&&formStatus.title.errors" class="invalid-feedback">
+                        <div *ngIf="formStatus.title.errors">title is required</div>
+                    </div>
+                </div>
+              
+                <div class="text-right">
+                    <button type="submit" nbButton hero status="success">Save</button>
+                </div>
+
+            </form>
+
+        </div>
+  
+</nb-card>

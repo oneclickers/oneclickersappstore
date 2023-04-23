@@ -6,6 +6,7 @@ import { LayoutService } from '../../../@core/utils';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { HostServiceService } from '../../../Service/host-service.service';
 
 @Component({
   selector: 'ngx-header',
@@ -48,12 +49,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private themeService: NbThemeService,
               private userService: UserData,
               private layoutService: LayoutService,
+              private hostService:HostServiceService,
               private breakpointService: NbMediaBreakpointsService) {
                 this.menuService.onItemClick().subscribe((event) => {
                   console.log(" this.menuService", this.menuService);
                   
                   if (event.item.title === 'Log out') {
                   console.log('logout clicked');
+                  this.hostService.removeItem()
+                  this.router.navigate(['/Login'])
                   }
                   });
   this.setUserRoll()
@@ -104,8 +108,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
   setUserRoll(){
     this.userRolInfo=this.router.url.split('/')
-  
-  
     this.userRolInfo=this.userRolInfo.splice(1,1) 
     console.log("userroll",this.userRolInfo);
   }

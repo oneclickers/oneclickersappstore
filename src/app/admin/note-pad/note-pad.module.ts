@@ -4,7 +4,7 @@ import { NotePadComponent } from './note-pad.component';
 import { RouterModule, Routes } from '@angular/router';
 import { CreateNoteComponent } from './create-note/create-note.component';
 import { NotePadListComponent } from './note-pad-list/note-pad-list.component';
-import { NbCardModule, NbIconModule } from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbIconModule } from '@nebular/theme';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { FormsModule } from '@angular/forms';
 
@@ -38,7 +38,8 @@ const routes:Routes=[
     FormsModule,
     RouterModule.forChild(routes),
     // CKEditorModule
-
+    CKEditorModule,
+    NbButtonModule,
   ]
 })
 export class NotePadModule {

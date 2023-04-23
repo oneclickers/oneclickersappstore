@@ -5,7 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NbButtonModule, NbCardModule, NbLayoutModule, NbOverlayContainer, NbOverlayModule, NbStepperModule, NbThemeModule, NbToastrModule } from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbIconModule, NbInputModule, NbLayoutModule, NbListModule, NbOverlayContainer, NbOverlayModule, NbProgressBarModule, NbSelectModule, NbStepperModule, NbThemeModule, NbToastrModule } from '@nebular/theme';
 
 const routes:Routes=[
   {
@@ -41,7 +41,12 @@ const routes:Routes=[
     NbLayoutModule,
     ReactiveFormsModule,
     NbToastrModule.forRoot(),
-    NbStepperModule
+    NbStepperModule,
+    NbIconModule,
+    NbInputModule,
+    NbProgressBarModule,
+    NbListModule,
+    NbSelectModule,
   ]
 })
 export class CreateAccountModule { }

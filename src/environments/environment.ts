@@ -10,5 +10,6 @@
 
 export const environment = {
   production: false,
-  baseURL:'http://localhost:3200'
+  baseURL:'http://localhost:3200',
+  messageURL:'http://localhost:3200'
 };

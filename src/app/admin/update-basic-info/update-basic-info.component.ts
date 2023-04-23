@@ -62,10 +62,24 @@ export class UpdateBasicInfoComponent implements OnInit {
       context: {
         title: 'Confirmation Popup',
         CPMessage:`Are You Sure You Want Delete the ${roll_Name} Roll ?`,
-        roll_Id:roll_Id,
+        id:roll_Id,
        
       },
   }).onClose.subscribe((res:any)=>{
+    if(res.action===true){
+      this.userService.deleteUserRoll(res.id).subscribe((res:any)=>{
+        if(res.statuscode===200){
+          this.message.success('Success',res.message,{
+            status:'success'
+          })
+        }
+        else{
+          this.message.success('Info',res.message,{
+            status:'info'
+          })
+        }
+      })
+    }
     this.ngOnInitAPIDatas()
   })
   }

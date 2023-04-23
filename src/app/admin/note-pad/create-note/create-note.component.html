@@ -1,3 +1,16 @@
-<!-- <nb-card  style="min-height: 75vh; max-height: 75vh;overflow-y:hidden;padding: 0;">
-   <ckeditor style="min-height: 75vh; max-height: 75vh;overflow-y:hidden;padding: 0;" class="col-12 col-xl-12 col-lg-6 col-md-12 col-sm-12" [(ngModel)]="name" [config]="config" debounce="500"></ckeditor>
-</nb-card> -->
+<nb-card style="min-height: 75vh; max-height: 75vh;overflow-y:hidden;padding: 15px 0px 0px 0px;">
+   <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 pb-2">
+      <div class="row">
+         <div class="col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4">
+            <input type="text" class="form-control" placeholder="Enter Your File Name">
+         </div>
+         <div class="col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 pl-0">
+            <button nbButton hero status="success" style="height: 38px;"><nb-icon
+                  icon="save-outline"></nb-icon></button>
+         </div>
+      </div>
+   </div>
+   <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+      <ckeditor style="height: 70vh !important;" [config]="config" data="<p>Hello, world!</p>"></ckeditor>
+   </div>
+</nb-card>

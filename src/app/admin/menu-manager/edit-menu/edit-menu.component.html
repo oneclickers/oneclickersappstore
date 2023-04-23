@@ -1,0 +1,177 @@
+<!-- <nb-card class="p-0 m-0">
+    <nb-card-body class="p-0 m-0"> -->
+        <div class="container-fluid">
+            <form [formGroup]="this.addNewMenuFrom" (ngSubmit)="onSubmit()">
+        
+        
+                <div class="row gutters">
+                    <div class="col-12 col-xl-3 col-lg-3 col-md-3 col-sm-12 pl-0">
+                        <nb-card class="p-0 m-0 shadow">
+                            <nb-card-header>New Parent
+                            </nb-card-header>
+                            <nb-card-body class="p-0 m-0">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group pt-3">
+                                                <label for="">Menu For <span class="text-danger">*</span></label>
+                                                <nb-select (selectedChange)="onChange($event)" fullWidth
+                                                    formControlName="menuFor" class="shadow-lg" placeholder="Select Roll">
+                                                    <nb-option *ngFor="let roll of this.rollList"
+                                                        value={{roll.roll_Name}}>{{roll.roll_Name}}</nb-option>
+                                                </nb-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 " *ngIf="newMenu">
+                                            <div class="text-left">
+                                                <button nbButton hero class="shadow-lg" status="primary"
+                                                    (click)="openANMPopup('newMenu')"><nb-icon icon="plus-outline"></nb-icon>New
+                                                    Menu</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </nb-card-body>
+                        </nb-card>
+                    </div>
+                    <div class="col-12 col-xl-9 col-lg-9 col-md-9 col-sm-12 pr-0">
+                        <nb-card class="p-0 m-0 shadow">
+                            <nb-card-header>Menu Structure
+                            </nb-card-header>
+                            <nb-card-body>
+                                <div class="container-fluid" *ngIf="openmenuStructure">
+                                    <div class="text-right pb-2">
+                                        <button nbButton hero class="shadow-lg" status="primary" type="submit"><nb-icon
+                                                icon="save-outline"></nb-icon>SAVE MENU</button>
+                                    </div>
+                                    <nb-accordion class="shadow-lg">
+                                        <nb-accordion-item>
+                                            <nb-accordion-item-header>{{this.addNewMenuFrom.controls['title'].value}}</nb-accordion-item-header>
+                                            <nb-accordion-item-body>
+                                                <div class="row pb-2">
+        
+                                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                                                        <label class="mb-0">Title <span class="text-danger">*</span></label>
+                                                    </div>
+                                                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12">
+                                                        <input type="text" formControlName="title" class="form-control"
+                                                            value="John Doe">
+                                                    </div>
+                                                </div>
+                                                <div class="row pb-2">
+                                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                                                        <label class="mb-0">Describtion <span
+                                                                class="text-danger">*</span></label>
+                                                    </div>
+                                                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 text-secondary">
+                                                        <input type="text" formControlName="describtion" class="form-control"
+                                                            value="John Doe">
+                                                    </div>
+                                                </div>
+                                                <div class="row pb-2">
+                                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                                                        <label class="mb-0">Icon <span class="text-danger">*</span></label>
+                                                    </div>
+                                                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 text-secondary">
+                                                        <input type="text" formControlName="icon" class="form-control"
+                                                            value="John Doe">
+                                                    </div>
+                                                </div>
+                                                <div class="row pb-2">
+                                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                                                        <label class="mb-0">link<span class="text-danger">*</span></label>
+                                                    </div>
+                                                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 text-secondary">
+                                                        <input type="text" formControlName="link" class="form-control"
+                                                            value="John Doe">
+                                                    </div>
+                                                </div>
+                                                <div class="row pb-2">
+                                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                                                        <label class="mb-0">Access<span class="text-danger">*</span></label>
+                                                    </div>
+                                                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 text-secondary">
+                                                        <input type="text" formControlName="access" class="form-control"
+                                                            value="John Doe">
+                                                    </div>
+                                                </div>
+                                                <div class="row pb-2">
+                                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="text-right">
+                                                            <button nbButton hero class="shadow-lg" status="success"
+                                                                (click)="openANMPopup('subMenu')" type="submit"><nb-icon
+                                                                    icon="plus-outline"></nb-icon>SUB
+                                                                MENU</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="container-fluid">
+                                                    <ng-container  formArrayName="children">
+                                                    <nb-accordion  class="m-1 shadow-lg" *ngFor="let child of addNewMenuFrom.get('children').controls; let i = index;">
+                                                        <nb-accordion-item [formGroupName]="i">
+                                                                <nb-accordion-item-header>{{this.addNewMenuFrom.get('children').value[i].title}}</nb-accordion-item-header>
+                                                                <nb-accordion-item-body>
+                                                                    <div class="row pb-2">
+        
+                                                                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                                                                            <label class="mb-0">Title <span class="text-danger">*</span></label>
+                                                                        </div>
+                                                                        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12">
+                                                                            <input type="text" formControlName="title" class="form-control"
+                                                                                value="John Doe">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row pb-2">
+                                                                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                                                                            <label class="mb-0">Describtion <span
+                                                                                    class="text-danger">*</span></label>
+                                                                        </div>
+                                                                        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 text-secondary">
+                                                                            <input type="text" formControlName="describtion" class="form-control"
+                                                                                value="John Doe">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row pb-2">
+                                                                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                                                                            <label class="mb-0">Icon <span class="text-danger">*</span></label>
+                                                                        </div>
+                                                                        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 text-secondary">
+                                                                            <input type="text" formControlName="icon" class="form-control"
+                                                                                value="John Doe">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row pb-2">
+                                                                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                                                                            <label class="mb-0">link<span class="text-danger">*</span></label>
+                                                                        </div>
+                                                                        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 text-secondary">
+                                                                            <input type="text" formControlName="link" class="form-control"
+                                                                                value="John Doe">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row pb-2">
+                                                                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                                                                            <label class="mb-0">Access<span class="text-danger">*</span></label>
+                                                                        </div>
+                                                                        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 text-secondary">
+                                                                            <input type="text" formControlName="access" class="form-control"
+                                                                                value="John Doe">
+                                                                        </div>
+                                                                    </div>
+                                                                </nb-accordion-item-body>
+                                                        </nb-accordion-item>
+                                                    </nb-accordion>
+                                                </ng-container>
+                                                </div>
+                                            </nb-accordion-item-body>
+                                        </nb-accordion-item>
+                                    </nb-accordion>
+                                </div>
+                            </nb-card-body>
+                        </nb-card>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- </nb-card-body>
+            </nb-card> -->

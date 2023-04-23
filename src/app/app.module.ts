@@ -33,6 +33,15 @@ import { ApiHandlerInterceptor } from './Service/interceptors/api-handler.interc
 import { PopupComponentComponent } from './popup/popup-component/popup-component.component';
 import { PopupComponentModule } from './popup/popup-component/popup-component.module';
 import { CreateAccountComponent } from './create-account/create-account.component';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { environment } from '../environments/environment';
+import { CKEditorModule } from 'ckeditor4-angular';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
+const config: SocketIoConfig = {
+   url: environment.messageURL,
+   options: {} ,
+   
+  };
 
 @NgModule({
   declarations: [AppComponent, PopupComponentComponent],
@@ -58,8 +67,10 @@ import { CreateAccountComponent } from './create-account/create-account.componen
     StudentModule,
     NotePadModule,
     PopupComponentModule,
-    NbStepperModule
-
+    NbStepperModule,
+    SocketIoModule.forRoot(config),
+    CKEditorModule,
+    PickerModule
   ],
   providers:[ {
     provide: HTTP_INTERCEPTORS,

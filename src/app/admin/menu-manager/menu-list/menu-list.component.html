@@ -1,0 +1,52 @@
+<nb-card class="p-0 m-0">
+    <nb-card-body class="p-0 m-0">
+
+       
+                <div class="container bootstrap snippets bootdey p-0 m-0">
+                    <div class="table-responsive">
+                        <table class="table colored-header datatable project-list" style="border: 2px solid #dee2e6;">
+                            <thead>
+                                <tr>
+                                    <th>SNO</th>
+                                    <th>Icon</th>
+                                    <th>Title</th>
+                                    <th>Parent</th>
+                                    <th>Link</th>
+                                    <th>Modify</th>
+                                </tr>
+                            </thead>
+                            <tbody style="text-align: left;">
+                                <tr *ngFor="let menu of  this.menuList;let i=index ">
+                                    <td >{{i+1}}</td>
+                                    <td style="color: blue;"><nb-icon icon="{{menu.icon}}"></nb-icon></td>
+                                    <td style="color: blue;">{{menu.title}}</td>
+                                    <td>{{checkParent(menu.parentInt)}}</td>
+                                    <td style="color: blue;">{{menu.link}}</td>
+                                    <td>
+                                        <nb-button-group style="height: 30px;">
+                                            <button (click)="editExistsMenu(menu.id)" nbButton hero status="primary"><nb-icon
+                                                    icon="edit-outline"></nb-icon></button>
+                                            <button (click)="deleteMenu(menu.id,menu.title)" nbButton hero status="danger"><nb-icon
+                                                    icon="trash-outline"></nb-icon></button>
+                                        </nb-button-group>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="text-right">
+                        <button nbButton hero status="success" (click)="AddNewMenu()"><nb-icon icon="plus-outline"></nb-icon>ADD NEW ROLL</button>
+                    </div>
+                </div>
+            <!-- </nb-tab>
+            <nb-tab tabTitle="Orders" tabIcon="bell-outline" responsive>
+                <p>List of <strong>orders</strong>.</p>
+            </nb-tab>
+            <nb-tab tabTitle="Transactions" tabIcon="email-outline" responsive>
+                <p>List of <strong>transactions</strong>.</p>
+            </nb-tab>
+        </nb-tabset> -->
+
+    </nb-card-body>
+</nb-card>
