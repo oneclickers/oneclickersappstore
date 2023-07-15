@@ -5,7 +5,6 @@ import { GPUDServiceService } from './gpudservice.service';
   providedIn: 'root'
 })
 export class UserServiceService {
- 
 protected getUsers_APIURL:string='/user';
 protected getUsers_Roll:string='/userroll';
 protected getGender_APIURL:string='/gender';
@@ -37,9 +36,21 @@ protected login_Api:string='/login'
   getGender(){
     return this.gpupService.get(this.getGender_APIURL) 
   }
+  getGenderByID(ID:any){
+    return this.gpupService.get(`${this.getGender_APIURL}/${ID}`) 
+  }
   get_UserRoll_Gender(){
   var usRoll:any=this.getUserRoll()
   var gender:any=this.getGender();
   return forkJoin([usRoll,gender])
   }
+  createGender(){
+
+  }
+ updateGender(){
+
+ }
+ deleteGender(){
+  
+ }
 }

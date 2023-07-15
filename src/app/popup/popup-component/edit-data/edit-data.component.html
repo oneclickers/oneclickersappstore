@@ -1,0 +1,72 @@
+<nb-card>
+    <nb-card-header>
+        <div class="row p-0">
+            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                <h6>{{title}}</h6>
+            </div>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <div style="min-width: 600px;" class="container bootdey">
+            <form [formGroup]="this.addDataFrom">
+                <div class="row">
+                    <div *ngFor="let object of this.uiLst" class="{{object['colwidth']}}">
+                        <h6 style="font-size: 11px;margin: 0;">{{object['lable']}} <span *ngIf="object['isMandatory']"
+                                class="mandatory">*</span></h6>
+                        <input type="text" maxlength="{{object['maxLenth']}}"
+                            *ngIf="object['inputType']==='text'&&object['InputDataType']==='text'"
+                            formControlName="{{object['formcontrolName']}}" placeholder="Update your status"
+                            class="form-control"
+                            [ngClass]="{ 'invalid': formSubmitted && formStatus[object['formcontrolName']]['errors'] }">
+                        <input type="number" maxlength="{{object['maxLenth']}}"
+                            *ngIf="object['inputType']==='text'&&object['InputDataType']==='number'"
+                            formControlName="{{object['formcontrolName']}}" placeholder="Update your status"
+                            class="form-control"
+                            [ngClass]="{ 'invalid': formSubmitted && formStatus[object['formcontrolName']]['errors'] }">
+                        <input type="date" maxlength="{{object['maxLenth']}}"
+                            *ngIf="object['inputType']==='text'&&object['InputDataType']==='date'"
+                            formControlName="{{object['formcontrolName']}}" placeholder="Update your status"
+                            class="form-control"
+                            [ngClass]="{ 'invalid': formSubmitted && formStatus[object['formcontrolName']]['errors'] }">
+                        <!-- <input type="date" *ngIf="object['inputType']==='text'&&object['InputDataType']==='date'" formControlName="{{object['formcontrolName']}}" placeholder="Update your status"
+                                class="form-control">-->
+                        <select  class="form-control" *ngIf="object['inputType']==='select'&&object['InputDataType']==='number'"
+                            formControlName="{{object['formcontrolName']}}"
+                            [ngClass]="{ 'invalid': formSubmitted && formStatus[object['formcontrolName']]['errors'] }">
+                            <option value="">Please Choose An Option</option>
+                            <ng-container *ngIf="object['options'].length>0">
+                                <option value="{{option['id']}}" *ngFor="let option of object['options']">
+                                    {{option['description']}}</option>
+                            </ng-container>
+                        </select>
+                        <ng-container *ngIf="object['isMandatory']">
+                            <div style="font-size: 10px !important"
+                                *ngIf="formSubmitted&& formStatus[object['formcontrolName']]['errors']">
+                               <div *ngIf="formSubmitted&& formStatus[object['formcontrolName']]['errors']['required']" [ngClass]="{ 'invalidText':formSubmitted&& formStatus[object['formcontrolName']]['errors']['required']}">{{object['lable']}} is required</div>
+                            </div>
+                        </ng-container>
+                        <!-- <div style="padding:3px 7px 2px 7px;" class="form-group">
+                            <nb-toggle style="font-size: 19px !important;" formControlName="is_Active"
+                                (checkedChange)="toggle($event)" status="primary">Active Status</nb-toggle>
+                        </div> -->
+                </div>
+                </div>
+                <div class="text-right m-0 pt-3">
+                    <ng-container *ngFor="let btn of this.uiBtnLst">
+                        
+                        <ng-container *ngIf="btn['function']==='submit'">
+                          <button type="submit" size="{{btn['size']}}" class="{{btn['style']}}" nbButton hero status="{{btn['status']}}"
+                        (click)="onSubmit()">{{btn['name']}} </button>
+                        </ng-container>
+                        <ng-container *ngIf="btn['function']==='close'">
+                           <button type="submit" size="{{btn['size']}}" class="{{btn['style']}}" nbButton hero status="{{btn['status']}}"
+                        (click)="close()">{{btn['name']}} </button>
+                        </ng-container>
+                       
+                    </ng-container>
+                     
+                </div>
+            </form>
+        </div>
+    </nb-card-body>
+</nb-card>

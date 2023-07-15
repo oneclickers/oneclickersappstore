@@ -1,0 +1,29 @@
+.invalid{
+    border: 1px solid #ff0000;
+    .invalid-feedback{
+        color: blue;
+    }
+}
+.mandatory{
+    color:#f10a0ad9;
+   font-weight: bold;
+}
+.invalidText{
+    color: #ff0000;
+      font-weight: bold; 
+}
+*{
+    font-size: 12px !important;
+}
+nb-card-header{
+    border: 1px solid transparent;
+    // background-color: #4F345A;
+    // background-image: linear-gradient(to right,#B4CFFA , #9CBFA7);
+}
+nb-card-body{
+    // background-color: #C9F299;
+    // background-image: linear-gradient(to right,#B4CFFA , #9CBFA7);
+    padding-top: 0;
+    padding-left: 9px;
+    padding-right: 9px;
+}

@@ -6,6 +6,7 @@ import { MenuServiceService } from './menu-service.service';
   providedIn: 'root'
 })
 export class HostServiceService {
+userid:any
 protected LclSryDtaBhorSuct=new BehaviorSubject<any>(null);
 public LclSryDta$=this.LclSryDtaBhorSuct.asObservable();
 public token:string;
@@ -31,9 +32,9 @@ public menuList$=this.menuBS$.asObservable();
   }
   setUserInfo(data:any){
     console.log();
-    
+    this.userid=data.userID
     localStorage.removeItem('userInfo')
-    localStorage.setItem('userInfo',JSON.stringify({userName:data.userName,userID:data.userID}))
+    localStorage.setItem('userInfo',JSON.stringify({userName:data.userName,userID:data.userID,picture:data.picture,name:data.name}))
   }
   getMenu(){
     return JSON.parse(localStorage.getItem('menu'))

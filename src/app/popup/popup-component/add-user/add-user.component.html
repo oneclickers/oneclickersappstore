@@ -1,0 +1,381 @@
+<nb-card class="shadow-lg col-12 col-xl-10 col-lg-10 col-md-10 col-sm-12 m-auto register" style="height: 99vh !important;width: 100vw !important;">
+    <form [formGroup]="this.loginFrom" >
+      <section>
+        <div class="p-3">
+         <div class="row">
+            <div class="col-12 col-lg-1 col-xl-1 col-md-1 col-sm-1 p-0">
+               <!-- <nb-icon icon="corner-up-left-outline"></nb-icon> -->
+               <div class="col-12 col-lg-6 col-xl-6 col-md-6 col-sm-6 p-0 m-0" style="margin: 0 !important;">
+                <i (click)="close()" class="bi bi-arrow-left-circle" style="font-size: 30px !important; padding-top: 3px;
+                
+                font-size: 29px;"></i>
+               </div>
+               
+            </div>
+            <div class="col-12 col-lg-11 col-xl-11 col-md-11 col-sm-11">
+                <h2 style="font-weight: bolder;font-size: 25px;" class="text-secondary form-label">Register</h2>
+            </div>
+         </div> 
+        </div>
+        <div class="container-fluid p-3 pt-0">
+
+          <div class="row gutters">
+            <div class="col-12 col-xl-3 col-lg-3 col-md-3 col-sm-12 pl-2">
+              <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 " style="text-align: center;">
+                
+                <img src={{this.base64Output}} >
+                <!-- <img *ngIf="!this.base64Output" class="initialImageFrame" src="assets/images/human-icon.png" alt="human-icon"> -->
+                <!-- <img class="initialImageFrame" src="../.././../assets/images/human-icon.png" alt="human-icon"> -->
+              </div>
+              <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-1" style="text-align: center;">
+                <button class="mb-1" type="file" nbButton hero status="primary" (click)="openWindow()"><nb-icon
+                    icon="camera-outline"></nb-icon>Upload <input id="fileSelector"  type="file" (change)="onFileSelected($event)"  /></button>
+                    
+                <button nbButton hero status="danger" (click)="removeImage()"><nb-icon
+                    icon="trash-outline"></nb-icon>Remove</button>
+              </div>
+              <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-3" style="text-align: left;">
+                <p style="font-weight: bolder;" class="text-primary form-label">Upload Status</p>
+                <nb-progress-bar style="font-size: 9px;" [value]="this.progressBar" status="primary" [displayValue]="true"
+                  ></nb-progress-bar>
+              </div>
+              <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-3" style="text-align: left;">
+                <nb-card class="shadow-lg col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                  <nb-list class="p-0 m-0">
+                    <nb-list-item (click)="openTab(object.tapId)" style="cursor: pointer;text-decoration: underline;"
+                      *ngFor="let object of PSAInfo" class="text-primary"><p style="font-weight: bolder;padding: 0;margin: 0;" class="text-primary form-label">{{object.tabName}}</p>
+                    
+                    </nb-list-item>
+                  </nb-list>
+                </nb-card>
+              </div>
+            </div>
+            <div class="col-12 col-xl-9 col-lg-9 col-md-9 col-sm-12 userInfo" [ngSwitch]=" this.tabId">
+              <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12" *ngSwitchCase=1>
+                <p style="font-weight: bolder;font-size: 25px;" class="text-secondary form-label">Personel Info</p>
+                <div class="row gutters">
+                  <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group">
+                      <label class="form-label">First Name <span class="text-danger">*</span></label>
+                      <input type="text" formControlName="firstname" class="form-control" placeholder="first name"
+                        aria-label="Last name" value="Doe"
+                        [ngClass]="{ 'invalid': formSubmitted && formStatus.firstname.errors }">
+                      <div *ngIf="formSubmitted && formStatus.firstname.errors ">
+                        <div *ngIf="formSubmitted&&formStatus.firstname.errors.required" class="text-info pt-1">firstname
+                       is
+                          required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group">
+                      <label class="form-label">Last Name <span class="text-danger">*</span></label>
+                      <input type="text" formControlName="lastname" class="form-control" placeholder=""
+                        aria-label="Last name" value="Doe"
+                        [ngClass]="{ 'invalid': formSubmitted && formStatus.lastname.errors }">
+                      <div *ngIf="formSubmitted && formStatus.lastname.errors ">
+                        <div *ngIf="formSubmitted&&formStatus.lastname.errors.required" class="text-info pt-1">lastname
+                           is
+                          required</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                      <label class="form-label">Date Of Birth <span class="text-danger">*</span></label>
+                      <input type="date" formControlName="dateofbirth" class="form-control" placeholder=""
+                        aria-label="Last name" value="Doe"
+                        [ngClass]="{ 'invalid': formSubmitted && formStatus.dateofbirth.errors }">
+                      <div *ngIf="formSubmitted && formStatus.dateofbirth.errors ">
+                        <div *ngIf="formSubmitted&&formStatus.dateofbirth.errors.required" class="text-info pt-1">dateofbirth
+                           is
+                          required</div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row gutters">
+                  <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                      <label class="form-label">Age <span class="text-danger">*</span></label>
+                      <input type="text" formControlName="age" class="form-control" placeholder=""
+                        aria-label="Last name" value="Doe"
+                        [ngClass]="{ 'invalid': formSubmitted && formStatus.age.errors }">
+                      <div *ngIf="formSubmitted && formStatus.age.errors ">
+                        <div *ngIf="formSubmitted&&formStatus.age.errors.required" class="text-info pt-1">age
+                           is
+                          required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                      <label class="form-label">Gender<span class="text-danger">*</span></label>
+                      <!-- <input type="text" formControlName="email_Id" class="form-control" placeholder=""
+                        aria-label="Last name" value="Doe"
+                        [ngClass]="{ 'invalid': formSubmitted && formStatus.email_Id.errors }"> -->
+                        <nb-select placeholder="Gender" fullWidth formControlName="gender">
+                          <nb-option *ngFor="let gender of this.genderList"  value="gender.gender_type">{{gender.gender_type}}</nb-option>
+                        </nb-select>
+                      <div *ngIf="formSubmitted && formStatus.gender.errors ">
+                        <div *ngIf="formSubmitted&&formStatus.gender.errors.required" class="text-info pt-1">gender
+                           is
+                          required</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row gutters">
+                  <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                      <label class="form-label">Biodata <span class="text-danger">*</span></label>
+                      <textarea formControlName="biodata" nbInput fullWidth placeholder="Textarea"
+                      [ngClass]="{ 'invalid': formSubmitted && formStatus.biodata.errors }" ></textarea>
+                      <div *ngIf="formSubmitted && formStatus.biodata.errors ">
+                        <div *ngIf="formSubmitted&&formStatus.biodata.errors.required" class="text-info pt-1">biodata
+                           is
+                          required</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row gutters">
+                  <div class="col-12 col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                      <label class="form-label">Country <span class="text-danger">*</span></label>
+                      <input type="text" formControlName="country" class="form-control" placeholder=""
+                        aria-label="Last name" value="Doe"
+                        [ngClass]="{ 'invalid': formSubmitted && formStatus.country.errors }">
+                      <div *ngIf="formSubmitted && formStatus.country.errors ">
+                        <div *ngIf="formSubmitted&&formStatus.country.errors.required" class="text-info pt-1">country
+                           is
+                          required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                      <label class="form-label">State<span class="text-danger">*</span></label>
+                      <input type="text" formControlName="state" class="form-control" placeholder=""
+                        aria-label="Last name" value="Doe"
+                        [ngClass]="{ 'invalid': formSubmitted && formStatus.state.errors }">
+                      <div *ngIf="formSubmitted && formStatus.state.errors ">
+                        <div *ngIf="formSubmitted&&formStatus.state.errors.required" class="text-info pt-1">state
+                           is
+                          required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                      <label class="form-label">District<span class="text-danger">*</span></label>
+                      <input type="text" formControlName="district" class="form-control" placeholder=""
+                        aria-label="Last name" value="Doe"
+                        [ngClass]="{ 'invalid': formSubmitted && formStatus.district.errors }">
+                      <div *ngIf="formSubmitted && formStatus.district.errors ">
+                        <div *ngIf="formSubmitted&&formStatus.district.errors.required" class="text-info pt-1">district
+                           is
+                          required</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row gutters">
+                  <div class="col-12 col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                      <label class="form-label">City <span class="text-danger">*</span></label>
+                      <input type="text" formControlName="city" class="form-control" placeholder=""
+                        aria-label="Last name" value="Doe"
+                        [ngClass]="{ 'invalid': formSubmitted && formStatus.city.errors }">
+                      <div *ngIf="formSubmitted && formStatus.city.errors ">
+                        <div *ngIf="formSubmitted&&formStatus.city.errors.required" class="text-info pt-1">city
+                           is
+                          required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                      <label class="form-label">Street Name<span class="text-danger">*</span></label>
+                      <input type="text" formControlName="streetname" class="form-control" placeholder=""
+                        aria-label="Last name" value="Doe"
+                        [ngClass]="{ 'invalid': formSubmitted && formStatus.streetname.errors }">
+                      <div *ngIf="formSubmitted && formStatus.streetname.errors ">
+                        <div *ngIf="formSubmitted&&formStatus.streetname.errors.required" class="text-info pt-1">street name
+                           is
+                          required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                      <label class="form-label">Door No<span class="text-danger">*</span></label>
+                      <input type="text" formControlName="doorno" class="form-control" placeholder=""
+                        aria-label="Last name" value="Doe"
+                        [ngClass]="{ 'invalid': formSubmitted && formStatus.doorno.errors }">
+                      <div *ngIf="formSubmitted && formStatus.doorno.errors ">
+                        <div *ngIf="formSubmitted&&formStatus.doorno.errors.required" class="text-info pt-1">door no
+                           is
+                          required</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12" *ngSwitchCase=2>
+                <p style="font-weight: bolder;font-size: 25px;" class="text-secondary form-label">Account Info</p>
+                <div class="row">
+                  <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                      <label class="form-label">User Roll<span class="text-danger">*</span></label>
+                      <!-- <input type="text" formControlName="email_Id" class="form-control" placeholder=""
+                        aria-label="Last name" value="Doe"
+                        [ngClass]="{ 'invalid': formSubmitted && formStatus.email_Id.errors }"> -->
+                        <nb-select placeholder="Gender" fullWidth>
+                          <nb-option *ngFor="let roll of  this.userRollList"  [value]='roll.roll_Id'>{{roll.roll_Name}}</nb-option>
+                         
+                        </nb-select>
+                      <div *ngIf="formSubmitted && formStatus.email_Id.errors ">
+                        <div *ngIf="formSubmitted&&formStatus.email_Id.errors.required" class="text-info pt-1">user
+                          name is
+                          required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                      <label class="form-label">Email<span class="text-danger">*</span></label>
+                      <input type="text" formControlName="email_Id" class="form-control" placeholder=""
+                        aria-label="Last name" value="Doe"
+                        [ngClass]="{ 'invalid': formSubmitted && formStatus.email_Id.errors }">
+                      <div *ngIf="formSubmitted && formStatus.email_Id.errors ">
+                        <div *ngIf="formSubmitted&&formStatus.email_Id.errors.required" class="text-info pt-1">user
+                          name is
+                          required</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+           
+                <div class="row gutters">
+                  <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group">
+                      <label class="form-label">Password <span class="text-danger">*</span></label>
+                      <input type="text" formControlName="email_Id" class="form-control" placeholder=""
+                        aria-label="Last name" value="Doe"
+                        [ngClass]="{ 'invalid': formSubmitted && formStatus.email_Id.errors }">
+                      <div *ngIf="formSubmitted && formStatus.email_Id.errors ">
+                        <div *ngIf="formSubmitted&&formStatus.email_Id.errors.required" class="text-info pt-1">user
+                          name is
+                          required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group">
+                      <label class="form-label">Confirm Passwrod<span class="text-danger">*</span></label>
+                      <input type="text" formControlName="email_Id" class="form-control" placeholder=""
+                        aria-label="Last name" value="Doe"
+                        [ngClass]="{ 'invalid': formSubmitted && formStatus.email_Id.errors }">
+                      <div *ngIf="formSubmitted && formStatus.email_Id.errors ">
+                        <div *ngIf="formSubmitted&&formStatus.email_Id.errors.required" class="text-info pt-1">user
+                          name is
+                          required</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row gutters">
+                  <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group">
+                      <label class="form-label">Mobile Number<span class="text-danger">*</span></label>
+                      <input type="text" formControlName="email_Id" class="form-control" placeholder=""
+                        aria-label="Last name" value="Doe"
+                        [ngClass]="{ 'invalid': formSubmitted && formStatus.email_Id.errors }">
+                      <div *ngIf="formSubmitted && formStatus.email_Id.errors ">
+                        <div *ngIf="formSubmitted&&formStatus.email_Id.errors.required" class="text-info pt-1">user
+                          name is
+                          required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group">
+                      <label class="form-label">Aadhar Number<span class="text-danger">*</span></label>
+                      <input type="text" formControlName="email_Id" class="form-control" placeholder=""
+                        aria-label="Last name" value="Doe"
+                        [ngClass]="{ 'invalid': formSubmitted && formStatus.email_Id.errors }">
+                      <div *ngIf="formSubmitted && formStatus.email_Id.errors ">
+                        <div *ngIf="formSubmitted&&formStatus.email_Id.errors.required" class="text-info pt-1">user
+                          name is
+                          required</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              
+              </div>
+              <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12" *ngSwitchCase=3>
+                <p style="font-weight: bolder;font-size: 25px;" class="text-secondary form-label">Social Media Info
+                </p>
+                <div class="row gutters">
+                  <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                      <label class="form-label">WebSit Link</label>
+                      <input type="text" formControlName="email_Id" class="form-control" placeholder=""
+                        aria-label="Last name" value="Doe">
+                    </div>
+                  </div>
+                  <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                      <label class="form-label">Twitter </label>
+                      <input type="text" formControlName="email_Id" class="form-control" placeholder=""
+                        aria-label="Last name" value="Doe">
+                    </div>
+                  </div>
+                  <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                      <label class="form-label">Facebook  </label>
+                      <input type="text" formControlName="email_Id" class="form-control" placeholder=""
+                        aria-label="Last name" value="Doe"
+                       >
+                 
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                      <label class="form-label">LinkedIn</label>
+                      <input type="text" formControlName="email_Id" class="form-control" placeholder=""
+                        aria-label="Last name" value="Doe">
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row gutters">
+                  <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                      <label class="form-label">Instagram </label>
+                      <input type="text" formControlName="email_Id" class="form-control" placeholder=""
+                        aria-label="Last name" value="Doe"
+                        >
+                    </div>
+                  </div>
+              
+                </div>
+              
+              </div>
+            </div>
+          </div>
+          <div class="text-right">
+            <button  class="m-1 mb-0" nbButton hero status="success">Next</button>
+            <button  class="m-1 mb-0" nbButton hero status="primary">Clear</button>
+          </div>
+        </div>
+      </section>
+    </form>
+  </nb-card>

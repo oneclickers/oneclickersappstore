@@ -2,7 +2,8 @@
 
 // themes - our custom or/and out of the box themes
 @import 'themes';
-
+// @import "~bootstrap-icons/font/bootstrap-icons.css";
+@import '../../../../node_modules/bootstrap-icons/font/bootstrap-icons.css';
 // framework component themes (styles tied to theme variables)
 @import '~@nebular/theme/styles/globals';
 @import '~@nebular/auth/styles/globals';
@@ -40,3 +41,40 @@
 @import '../../../../node_modules/boxicons/css/boxicons.min.css';
 // @import '~@ctrl/ngx-emoji-mart/picker';
 @import '../../../../node_modules/@ctrl/ngx-emoji-mart/picker.css';
+nb-select{
+  .select-button{
+      span{
+          font-size: 13px !important;
+      }
+  }
+}
+
+// body {
+//     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+//     font-size: 13px;
+//     color: #555;
+//     background: #ececec;
+//     margin-top:20px;
+//   }
+  
+// .project-list > tbody > tr > td {
+//     padding: 12px 8px;
+//   }
+  
+//   .project-list > tbody > tr > td .avatar {
+//     width: 22px;
+//     border: 1px solid #CCC;
+//   }
+.active{
+  color: #28a745;
+}
+.inActive{
+ color: red;
+}
+// *{
+//   font-size: 13px !important;
+// }
+
+td{
+  vertical-align: inherit !important;
+}

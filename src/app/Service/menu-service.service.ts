@@ -31,7 +31,7 @@ export class MenuServiceService {
     return this.gpupService.get(`${this.Menus_APIURL}/${id}`)
   }
   editMenu(data:any){
-    return this.gpupService.post(this.Menus_APIURL,data)
+    return this.gpupService.put(this.Menus_APIURL,data)
   }
 }
 

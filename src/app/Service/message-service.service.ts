@@ -11,7 +11,6 @@ export class MessageServiceService {
   public chatList$: BehaviorSubject<string> = new BehaviorSubject('');
   constructor(private socket:Socket) { }
   socketConnection(){
-  // this.socket.connect()
   this.socket.emit('connection')
   console.log('this.socket',this.socket);
   
@@ -27,6 +26,8 @@ export class MessageServiceService {
     return this.message$.asObservable();
   };
   emitMembarList(userID:any){
+    console.log("member list",userID);
+    
     this.socket.emit('getChatMemberList',userID)
   }
   public getPreviousChatMembersList = () => {
@@ -46,4 +47,8 @@ export class MessageServiceService {
     });
     return this.chatList$.asObservable();
   };
+  // socketDisconnect(){
+  //   this.socket.emit('disconnect')
+  //   this.message$.unsubscribe()
+  // }
 }

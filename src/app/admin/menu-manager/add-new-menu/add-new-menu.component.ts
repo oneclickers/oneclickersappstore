@@ -5,6 +5,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AddMenuPopupComponent } from '../../../popup/popup-component/add-menu-popup/add-menu-popup.component';
 import { MenuServiceService } from '../../../Service/menu-service.service';
 import { HostServiceService } from '../../../Service/host-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-add-new-menu',
@@ -13,6 +14,7 @@ import { HostServiceService } from '../../../Service/host-service.service';
 })
 export class AddNewMenuComponent implements OnInit {
   rollList: any[] = [];
+  public router_Name:any=[]
   openmenuStructure: boolean = false
   addNewMenuFrom: FormGroup;
   newMenu: boolean = false
@@ -22,10 +24,13 @@ export class AddNewMenuComponent implements OnInit {
     private fb: FormBuilder,
     private window: NbWindowService,
     private menuService:MenuServiceService,
-    private hostservice:HostServiceService
+    private hostservice:HostServiceService,
+    private routers:Router,
+    private router:Router,
   ) { }
 
   ngOnInit(): void {
+    this.setPageHeader()
     this.ngPreparForm();
     this.getUserRoll()
   }
@@ -37,6 +42,7 @@ export class AddNewMenuComponent implements OnInit {
       describtion: [null, Validators.required],
       link: [null, Validators.required],
       access:[null, Validators.required],
+      parentInt:[null],
       children: new FormArray([])
     })
   }
@@ -81,7 +87,7 @@ else{
   menu.c_usr_id =this.hostservice.getUserId()
   this.menuService.addNewMenu(menu).subscribe((res:any)=>{
     if(res.statuscode===200){
-      this.hostservice.autoSetMenu()
+      // this.hostservice.autoSetMenu()
       // this.menuService.getMenus().subscribe((res:any)=>{
       //   if(res.statuscode===200){
       //     this.hostservice.setMenu(res.data)
@@ -90,12 +96,13 @@ else{
       this.message.show(res.message,'Success',{
         status:'success'
       })
-
+      this.routers.navigate(['/Admin/MenuManager/MenuList'])
     }
     else{
        this.message.show(res.message,'Info',{
         status:'info'
       })
+      this.routers.navigate(['/Admin/MenuManager/MenuList'])
     }
   })
 }
@@ -132,5 +139,12 @@ else{
   }
   onChange(data:any){
     this.newMenu=true
+  }
+  setPageHeader()
+  {
+    this.router_Name=this.router.url.split('/')
+    this.router_Name=this.router_Name.splice(1,2)  
+    console.log("menu",this.router_Name);
+    
   }
 }

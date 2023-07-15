@@ -1,0 +1,132 @@
+<nb-card class="shadow pb-0 mb-1 p-3 bg-white rounded mt-0">
+    <form [formGroup]="userForm">
+    <div class="row p-0 m-0">
+        <div class="col-12 col-xl-3 col-lg-3 col-md-3 col-sm-3 p-0 m-0">
+            <h4 class="p-0 m-0 d-flex">
+                <span class="d-flex" *ngFor="let routerName of this.router_Name;let i=index">
+                    <span>
+                        <span *ngIf="i!=0" class="pl-1 pr-1">|</span>
+                        <span style="font-size:17px !important;"
+                            [ngClass]="i==1? 'text-primary':'text-secondary'">{{routerName}}</span>
+                    </span>
+                </span>
+            </h4>
+        </div>
+        <div class="col-12 col-xl-5 col-lg-5 col-md-5 col-sm-5 p-0">
+            <span><i class="bi bi-search" style="    position: fixed;
+            position: absolute;
+            font-size: 16px !important;
+width: 40px;
+padding: 6px 30px 6px 20px;
+border-top-left-radius: 5px;
+border-bottom-left-radius: 5px;
+border-right: 2px solid gray;
+margin: 4px 0px;cursor: pointer;"></i></span>
+            <input type="text" (keyup)="onKeyUpEvent($event)"
+                style="background-color: whitesmoke !important ;font-size: 13px !important;height: 40px;    padding-left: 75px;"
+                formControlName="search"  status="basic" placeholder="Search....." class="shadow-lg form-control">
+
+        </div>
+        <div class="col-12 col-xl-3 col-lg-3 col-md-3 col-sm-3 pr-0">
+            <!-- <nb-select style="font-size: 13px !important;" (selectedChange)="onChange($event)" fullWidth
+                class="shadow-lg" placeholder="Select Roll">
+                <nb-option style="font-size: 13px !important;" value=""></nb-option>
+            </nb-select> -->
+        </div>
+        <div class="col-12 col-xl-1 col-lg-1 col-md-1 col-sm-1 p-0 m-0">
+            <div class="text-right">
+                <button size="medium" nbButton hero status="primary" (click)="addNewUser()"><nb-icon
+                        icon="plus-outline"></nb-icon></button>
+            </div>
+        </div>
+    </div>
+    </form>
+</nb-card>
+<nb-card class="shadow mb-0" style="min-height: 75vh;">
+    <nb-card-body class="p-0">
+                <div class="container bootstrap snippets bootdey p-0">
+                    <div class="table-responsive">
+                        <table class="table colored-header datatable project-list shadow" style="font-size: 13px !important;" >
+                            <thead>
+                                <tr>
+                                   
+                                    <th>Picture</th>
+                                    <th>Name</th>
+                                    <th>Email Id</th>
+                                    <th>Mobile Number</th>
+                                    <th>Status</th>
+                                    <!-- <th>Modify</th> -->
+                                </tr>
+                            </thead>
+                            <tbody style="text-align: left;">
+                                <tr  *ngFor="let roll of this.userRoll | filter:search | angularPaginator: this.agPaginatorConfig ;  let i = index" style="vertical-align: middle;">
+                              
+                                 <td class="text-primary" style="font-weight: bold;padding-bottom: 2px;
+                                    padding-top: 2px;" >
+                                        <img src={{roll.photo}} alt="dvfdb" style="width: 48px;height: 50px;border-radius: 50%;">
+                                    </td>
+                                    <td style="vertical-align: middle;" class="text-primary">{{roll.name}}</td>
+                                    <td style="vertical-align: middle;" class="text-primary">{{roll.email_Id}}</td>
+                                    <td style="vertical-align: middle;">{{roll.phonenumber}}</td>
+                                    <td style="vertical-align: middle;" class="text-success"><span>{{ roll.is_Active==1?'ACTIVE':'INACTIVE'}}</span></td>
+                                    <!-- <td style="vertical-align: middle;">
+                                        <nb-button-group style="height: 30px; " class="shadow">
+                                            <button (click)="editExistsRoll(roll)" class="shadow"  nbButton hero status="primary"><nb-icon
+                                                    icon="edit-outline"></nb-icon></button>
+                                            <button (click)="deleteRoll(roll.roll_Id,roll.roll_Name)" class="shadow" nbButton hero status="warning"><nb-icon
+                                                    icon="trash-outline"></nb-icon></button>
+                                        </nb-button-group>
+                                    </td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-right pl-3 bottom-pagination" *ngIf="this.userRoll.length>0">
+                        <nav angularPaginator [forceEllipses]="true" [rotate]="true" [maxSize]="maxSize"
+                            aria-label="Pagination Component" #paginator="angularPaginator" (pageChange)="currentPage($event)">
+                            <ng-container *ngIf="paginator.pages['length'] !== 0">
+                                <ul class="pagination pagination-sm">
+        
+                                    <li class="page-item" [ngClass]="{
+                                                disabled: paginator.currentPage === paginator.firstPage
+                                              }">
+                                        <a style="cursor: pointer;" class="page-link" (click)="paginator.toPreviousPage()">
+                                            <span aria-hidden="true">Previous</span>
+                                            <span class="visually-hidden">Previous</span>
+                                        </a>
+                                    </li>
+        
+        
+                                    <li style="cursor: pointer;" class="page-item" *ngFor="let page of paginator.pages"
+                                        [ngClass]="{ active: page['active'] }">
+                                        <a style="cursor: pointer;" class="page-link" (click)="
+                                                  !page['active'] && paginator.setCurrentPage(page['number'])
+                                                ">
+                                            {{ page['text'] }}
+                                            <span class="visually-hidden" *ngIf="!page['active']">Page{{ page['text'] }}</span>
+                                            <span class="visually-hidden" *ngIf="page['active']">You are on page {{ page['text']
+                                                }}</span>
+                                        </a>
+                                    </li>
+        
+        
+                                    <li class="page-item" [ngClass]="{disabled: paginator.currentPage === paginator.lastPage}">
+                                        <a style="cursor: pointer;" class="page-link" (click)="paginator.toNextPage()">
+                                            <span aria-hidden="true">Next</span>
+                                            <span class="visually-hidden">Next</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </ng-container>
+                        </nav>
+        
+                    </div>
+
+                    <!-- <div class="text-right">
+                        <button nbButton size="small" hero class="shadow" status="primary" (click)="addNewRoll()"><nb-icon icon="plus-outline"></nb-icon>ADD ROLL</button>
+                    </div> -->
+                </div>
+    
+
+    </nb-card-body>
+</nb-card>

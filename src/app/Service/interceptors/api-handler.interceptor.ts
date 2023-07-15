@@ -20,6 +20,8 @@ export class ApiHandlerInterceptor implements HttpInterceptor {
     const modifyURL:any=request.clone({
       url:`${environment.baseURL}${request.url}`
     })
+    console.log("url",modifyURL);
+    
     return next.handle(modifyURL).pipe(retry(1))
   }
 }

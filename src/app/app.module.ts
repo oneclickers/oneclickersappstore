@@ -11,6 +11,7 @@ import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { AngularPaginatorModule } from 'angular-paginator';
 import {
   NbChatModule,
   NbDatepickerModule,
@@ -37,6 +38,7 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from '../environments/environment';
 import { CKEditorModule } from 'ckeditor4-angular';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { AgGridModule } from 'ag-grid-angular';
 const config: SocketIoConfig = {
    url: environment.messageURL,
    options: {} ,
@@ -70,7 +72,9 @@ const config: SocketIoConfig = {
     NbStepperModule,
     SocketIoModule.forRoot(config),
     CKEditorModule,
-    PickerModule
+    PickerModule,
+    AngularPaginatorModule,
+    AgGridModule
   ],
   providers:[ {
     provide: HTTP_INTERCEPTORS,

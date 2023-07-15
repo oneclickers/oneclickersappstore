@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageServiceService } from '../../Service/message-service.service';
 import { HostServiceService } from '../../Service/host-service.service';
@@ -11,13 +11,17 @@ import { NbToastrService } from '@nebular/theme';
   styleUrls: ['./chat-part.component.scss']
 })
 export class ChatPartComponent implements OnInit {
+  @ViewChild('scrollMe') private myScrollContainer: ElementRef;
   router_Name: any = [];
   showEmojiPicker = false;
   message: any;
+  newMessage: String;
   SeachedUse: any[] = []
-  messages: any[] = []
+  messages: any[] = [];
+  chatmemberList:any[]=[]
   previousChatMemberList: any[] = [];
-  userID: number
+  userID: number;
+  r_id:number=0
   chating: any[] = [
     {
       text: 'Hi, what are you doing?!',
@@ -49,24 +53,31 @@ export class ChatPartComponent implements OnInit {
   userList: any;
   userName: any;
   receiverID: any;
+  search:any
   constructor(
     private router: Router,
     private messageService: MessageServiceService,
     private userInfo: HostServiceService,
     private userService: UserServiceService,
     private Tmessage: NbToastrService,
+    private hostService:HostServiceService
   ) {
     this.userID = this.userInfo.getUserId();
+    this.ngOnMessageSetUp();
+    // this.userID = this.hostService.userid;
     this.userName = this.userInfo.getUserName();
   }
 
   ngOnInit(): void {
+    
+    this.previousChatMemberList=[]
     this.setPageHeader();
     this.prepareMemberList(this.userID);
     this.getPreviousChatMemberList();
-    this.ngOnMessageSetUp();
     this.getNewMessage();
+    this.scrollToBottom();
     this.getUserList();
+
     // this.
   }
   setPageHeader() {
@@ -95,7 +106,11 @@ export class ChatPartComponent implements OnInit {
   getUserList() {
     this.userService.getUsers().subscribe((res: any) => {
       if (res.statuscode === 200) {
-        this.userList = res.data
+        this.userList = res.data.map((data:any)=>{
+          data.id=data.user_Id
+          delete data.user_Id
+          return data
+        })
       } else {
         this.Tmessage.show(res.message, 'Info',
           {
@@ -111,50 +126,65 @@ export class ChatPartComponent implements OnInit {
   }
   sendMessage(event: any) {
   
-    const files = !event.files ? [] : event.files.map((file) => {
-      return {
-        url: file.src,
-        type: file.type,
-        icon: 'file-text-outline',
-      };
-    });
+    // const files = !event.files ? [] : event.files.map((file) => {
+    //   return {
+    //     url: file.src,
+    //     type: file.type,
+    //     icon: 'file-text-outline',
+    //   };
+    // });
+    
     var model={
-      message:event.message,
-      receiverID:this.receiverID,
-      senderID:this.userID,
+      message:this.newMessage,
+      receiver_id:this.receiverID,
+      sender_Id:this.userID,
       view_Status:0,
+      // date:new Date(),
       files:''
     }
+    this.newMessage=''
     console.log("message", model,event);
     this.messageService.sendMessage(model)
    
 
   }
   getNewMessage() {
+    console.log("getNewMessagecalled");
+    
     this.messageService.getNewMessage().subscribe((res: any) => {
       console.log('newMessage', res);
-      if (res) {
-        this.messages.push(res)
-        // this.messages.push({
-        //   text: res.text,
-        //   date: res.createdAt,
-        //   reply: res.reply,
-        //   type: res.type,
-        //   files: res.files,
-        //   user: {
-        //     // name: res.name,
-        //     name: res.text,
-        //     avatar: res.avatar,
-        //   }
-        // })
+      if(this.r_id!=0){
+        if (res) {
+          this.messages.push(res)
+          // this.messages.push({
+          //   text: res.text,
+          //   date: res.createdAt,
+          //   reply: res.reply,
+          //   type: res.type,
+          //   files: res.files,
+          //   user: {
+          //     // name: res.name,
+          //     name: res.text,
+          //     avatar: res.avatar,
+          //   }
+          // })
+        }
       }
+    
 
     })
   }
   onSearch(name: any) {
-    if (name) {
-      this.SeachedUse = this.userList.filter((data: any) => data.email_Id === name)
+    console.log("onsearch",this.search);
+    
+    if(this.search.length>0){
+      this.previousChatMemberList = this.userList.filter((data: any) => data.email_Id === this.search);
+      console.log("onsearchvsvs", this.previousChatMemberList );
     }
+  else{
+    this.prepareMemberList(this.userID);
+    //  this.previousChatMemberList=  this.chatmemberList
+  }
 
   }
   prepareMemberList(userID: any) {
@@ -165,9 +195,11 @@ export class ChatPartComponent implements OnInit {
       console.log("getPreviousChatMembersList", res);
 
       this.previousChatMemberList = res
+      this.chatmemberList=res
     })
   }
-  previousChat(id) {
+  previousChat(id:any) {
+    this.r_id=id
     console.log("rsID", id);
     this.receiverID=id
     var model: any = {
@@ -184,4 +216,16 @@ export class ChatPartComponent implements OnInit {
       this.messages = res
     })
   }
+
+
+ngAfterViewChecked() {        
+    this.scrollToBottom();        
+} 
+
+scrollToBottom(): void {
+    try {
+        this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    } catch(err) { }                 
+}
+
 }

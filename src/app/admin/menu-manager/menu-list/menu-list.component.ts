@@ -6,6 +6,7 @@ import { ConfirmationPopupComponent } from '../../../popup/popup-component/confi
 import { MenuServiceService } from '../../../Service/menu-service.service';
 import { UserServiceService } from '../../../Service/user-service.service';
 import { HostServiceService } from '../../../Service/host-service.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'ngx-menu-list',
@@ -13,8 +14,16 @@ import { HostServiceService } from '../../../Service/host-service.service';
   styleUrls: ['./menu-list.component.scss']
 })
 export class MenuListComponent implements OnInit {
-  public menuList: any = []
- 
+  public menuList: any = [];
+  public router_Name:any=[]
+  agPaginatorConfig:any;
+  // currentPage = 1;
+  itemsPerPage = 15;
+  rollList:any[]=[]
+  maxSize = "7";
+  menuListForm:FormGroup;
+  search:any;
+  overAllMenu:any[]=[]
   constructor(
     private userService: UserServiceService,
     private message: NbToastrService,
@@ -22,18 +31,52 @@ export class MenuListComponent implements OnInit {
     private dialog:NbDialogService,
     private menuService:MenuServiceService,
     private router:Router,
-    private hostService:HostServiceService
+    private hostService:HostServiceService,
+    private fb: FormBuilder,
+    
   ) {
-    this.ngOnInitAPIDatas()
-  }
+   
+    
+   
 
+  }
+ngPreparForm(){
+  this.menuListForm = this.fb.group({
+   SearchByselect:[null],
+   SearchBytext:[null]
+  })
+}
   ngOnInit(): void {
+    this.setPageHeader()
+    this.agPaginatorConfig={
+      id: 'ANGULAR_PAGINATOR_DEFAULT',
+      itemsPerPage: this.maxSize,
+      currentPage: 1
+    }
+    this.ngPreparForm();
+    this.ngOnInitAPIDatas();
   }
   ngOnInitAPIDatas() {
+    this.userService.getUserRoll().subscribe((res: any) => {
+      if (res.statuscode === 200) {
+        this.rollList = res.data;
+        this.menuListForm.controls['SearchByselect'].setValue("1")
+        console.log("rolllist",this.rollList);
+        
+      }
+      else {
+        this.message.info(res.message, "Info", {
+          status: 'info'
+        })
+      }
+
+    })
     this.menuService.getMenus().subscribe((res: any) => {
       console.log("getMenus", res);
       if (res.statuscode == 200) {
-        this.menuList = res.data
+        // this.menuList = res.data;
+        this.overAllMenu=res.data;
+        this.onChange(this.menuListForm.controls['SearchByselect'].value)
         console.log("userroll",  this.menuList);
 
       }
@@ -62,7 +105,7 @@ export class MenuListComponent implements OnInit {
 if(res.action===true){
   this.menuService.deleteMenu(res.id).subscribe((res:any)=>{
     if(res.statuscode===200){
-      this.hostService.autoSetMenu()
+      // this.hostService.autoSetMenu()
       this.message.success('Success',res.message,{
         status:'success'
       })
@@ -79,10 +122,33 @@ if(res.action===true){
   })
   }
 checkParent(data:any){
-
-  console.log("test",data);
-  
   return data===null?"Parent":this.menuList[this.menuList.findIndex((res:any)=>res.id===data)]['title']
 }
-menu_Id
+currentPage(event:any){
+  this.agPaginatorConfig={
+    id: 'ANGULAR_PAGINATOR_DEFAULT',
+    itemsPerPage: this.maxSize,
+    currentPage: event
+  }
+}
+onChange(data:any){
+  // this.newMenu=true
+  console.log("selected",data);
+  this.menuList=this.overAllMenu.filter((menu:any)=>{
+    if(Number(menu.accessInts)===Number(data))return menu
+  })
+  
+}
+onKeyUpEvent(event:any){
+  this.search=this.menuListForm.controls['SearchBytext'].value;
+  console.log("up search",  this.search);
+  
+}
+setPageHeader()
+{
+  this.router_Name=this.router.url.split('/')
+  this.router_Name=this.router_Name.splice(1,2)  
+  console.log("menu",this.router_Name);
+  
+}
 }

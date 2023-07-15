@@ -4,12 +4,13 @@ import { MenuManagerComponent } from './menu-manager.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MenuListComponent } from './menu-list/menu-list.component';
 import { AddNewMenuComponent } from './add-new-menu/add-new-menu.component';
-import { NbAccordionModule, NbButtonGroupModule, NbButtonModule, NbCardModule, NbDialogModule, NbIconModule, NbLayoutModule, NbMenuModule, NbSelectModule, NbTabsetModule, NbToastrModule, NbWindowModule } from '@nebular/theme';
+import { NbAccordionModule, NbButtonGroupModule, NbButtonModule, NbCardModule, NbDialogModule, NbIconModule, NbInputModule, NbLayoutModule, NbMenuModule, NbSelectModule, NbTabsetModule, NbToastrModule, NbWindowModule } from '@nebular/theme';
 import { ThemeModule } from '../../@theme/theme.module';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EditMenuComponent } from './edit-menu/edit-menu.component';
-
+import { AngularPaginatorModule } from 'angular-paginator';
+// import { Ng2SearchPipeModule } from 'ng2-search-filter';
 const routes:Routes=[
   {
     path:'',component:MenuManagerComponent
@@ -48,7 +49,9 @@ const routes:Routes=[
     RouterModule.forChild(routes),
     NbToastrModule.forRoot(),
     NbWindowModule.forRoot(),
-    NbDialogModule
+    NbDialogModule,
+    AngularPaginatorModule,
+    NbInputModule,
   ]
 })
 export class MenuManagerModule { }

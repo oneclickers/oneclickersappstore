@@ -1,12 +1,32 @@
 <!-- <nb-card class="p-0 m-0">
     <nb-card-body class="p-0 m-0"> -->
+        <nb-card class="shadow pb-0 mb-1 p-3 bg-white rounded mt-0">
+           
+            <div class="row p-0 m-0">
+                <div class="col-12 col-xl-3 col-lg-3 col-md-3 col-sm-3 p-0 m-0">
+                    <h4 class="p-0 m-0 d-flex">
+                        <span class="d-flex" *ngFor="let routerName of this.router_Name;let i=index">
+                            <span>
+                                <span *ngIf="i!=0" class="pl-1 pr-1">|</span>
+                                <span style="font-size:15px !important;"
+                                    [ngClass]="i==1? 'text-primary':'text-secondary'">{{routerName}}</span>
+                            </span>
+                        </span>
+                    </h4>
+                </div>
+              
+            </div>
+           
+        </nb-card>
         <div class="container-fluid">
-            <form [formGroup]="this.addNewMenuFrom" (ngSubmit)="onSubmit()">
+            <form [formGroup]="addNewMenuFrom" >
         
         
                 <div class="row gutters">
                     <div class="col-12 col-xl-3 col-lg-3 col-md-3 col-sm-12 pl-0">
-                        <nb-card class="p-0 m-0 shadow">
+                        <nb-card class="p-0 m-0 shadow" style=" min-height: 76vh;
+                        max-height: 76vh;
+                        overflow-y: scroll ;  font-size: 13px !important;">
                             <nb-card-header>New Parent
                             </nb-card-header>
                             <nb-card-body class="p-0 m-0">
@@ -15,7 +35,7 @@
                                         <div class="col-12">
                                             <div class="form-group pt-3">
                                                 <label for="">Menu For <span class="text-danger">*</span></label>
-                                                <nb-select (selectedChange)="onChange($event)" fullWidth
+                                                <nb-select (selectedChange)="onChange($event)" fullWidth disabled
                                                     formControlName="menuFor" class="shadow-lg" placeholder="Select Roll">
                                                     <nb-option *ngFor="let roll of this.rollList"
                                                         value={{roll.roll_Name}}>{{roll.roll_Name}}</nb-option>
@@ -35,14 +55,16 @@
                         </nb-card>
                     </div>
                     <div class="col-12 col-xl-9 col-lg-9 col-md-9 col-sm-12 pr-0">
-                        <nb-card class="p-0 m-0 shadow">
+                        <nb-card class="p-0 m-0 shadow" style=" min-height: 76vh;
+                        max-height: 76vh;
+                        overflow-y: scroll ;  font-size: 13px !important;">
                             <nb-card-header>Menu Structure
                             </nb-card-header>
                             <nb-card-body>
                                 <div class="container-fluid" *ngIf="openmenuStructure">
                                     <div class="text-right pb-2">
-                                        <button nbButton hero class="shadow-lg" status="primary" type="submit"><nb-icon
-                                                icon="save-outline"></nb-icon>SAVE MENU</button>
+                                        <button nbButton hero class="shadow-lg" status="primary" type="submit" (click)="onSubmit()"><nb-icon
+                                                icon="save-outline" ></nb-icon>SAVE MENU</button>
                                     </div>
                                     <nb-accordion class="shadow-lg">
                                         <nb-accordion-item>
@@ -83,7 +105,7 @@
                                                     </div>
                                                     <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 text-secondary">
                                                         <input type="text" formControlName="link" class="form-control"
-                                                            value="John Doe">
+                                                            value="John Doe" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row pb-2">
@@ -91,7 +113,7 @@
                                                         <label class="mb-0">Access<span class="text-danger">*</span></label>
                                                     </div>
                                                     <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 text-secondary">
-                                                        <input type="text" formControlName="access" class="form-control"
+                                                        <input type="text" disabled formControlName="access" class="form-control"
                                                             value="John Doe">
                                                     </div>
                                                 </div>
@@ -146,7 +168,7 @@
                                                                         </div>
                                                                         <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 text-secondary">
                                                                             <input type="text" formControlName="link" class="form-control"
-                                                                                value="John Doe">
+                                                                                value="John Doe" disabled>
                                                                         </div>
                                                                     </div>
                                                                     <div class="row pb-2">
@@ -154,7 +176,7 @@
                                                                             <label class="mb-0">Access<span class="text-danger">*</span></label>
                                                                         </div>
                                                                         <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 text-secondary">
-                                                                            <input type="text" formControlName="access" class="form-control"
+                                                                            <input type="text" disabled formControlName="access" class="form-control"
                                                                                 value="John Doe">
                                                                         </div>
                                                                     </div>

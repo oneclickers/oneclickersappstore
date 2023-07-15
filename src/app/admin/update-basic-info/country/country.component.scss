@@ -1,0 +1,70 @@
+// body {
+//     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+//     font-size: 13px;
+//     color: #555;
+//     background: #ececec;
+//     margin-top:20px;
+//   }
+  
+// .project-list > tbody > tr > td {
+//     padding: 12px 8px;
+//   }
+  
+//   .project-list > tbody > tr > td .avatar {
+//     width: 22px;
+//     border: 1px solid #CCC;
+//   }
+.active{
+    color: #28a745;
+  }
+  .inActive{
+   color: red;
+  }
+  .paginator {
+    font-size: 95%;
+  
+    .btn {
+      &:focus {
+        box-shadow: none;
+        cursor: pointer;
+      }
+    }
+  
+    mark {
+      background-color: #f1f1f1;
+    }
+  
+    .pagination-components {
+      margin-bottom: 2rem;
+  
+      p {
+        margin-bottom: 0.5rem;
+      }
+  
+      .page-number {
+        display: inline-block;
+        width: 20px;
+        text-align: right;
+        margin-right: 3px;
+        cursor: pointer;
+      }
+    }
+  
+    .page-link {
+      cursor: pointer;
+    }
+  
+    .pagination-options {
+      ul {
+        li {
+          margin-bottom: 0.5rem;
+        }
+      }
+    }
+
+  }
+  .bottom-pagination{
+    position: absolute;
+    bottom: 2px;
+  }
+

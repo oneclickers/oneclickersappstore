@@ -19,6 +19,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public userPictureOnly: boolean = false;
   public user: any;
   public noteBad:NbMenuItem[]=[{title:'New Notepad',icon:'file-add-outline',link:'/Admin/Notepad/CreateNote'},{title:'All Notepad',icon:'file-text-outline' ,link:'/Admin/Notepad/NotepadList'}]
+  public email:NbMenuItem[]=[{title:'Email',icon:'email-outline',link:'/Admin/Email'}]
   public message:NbMenuItem[]=[{title:'Chart',icon:'message-circle-outline',link:'/Admin/Message'}]
   public currentTheme:any
   public themes = [
@@ -65,18 +66,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentTheme = this.themeService.currentTheme;
+     this.user = JSON.parse(localStorage.getItem('userInfo'))
+     console.log("userinfo");
+     
+    // this.userService.getUsers()
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe((users: any) => this.user = users.nick);
 
-    this.userService.getUsers()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((users: any) => this.user = users.nick);
-
-    const { xl } = this.breakpointService.getBreakpointsMap();
-    this.themeService.onMediaQueryChange()
-      .pipe(
-        map(([, currentBreakpoint]) => currentBreakpoint.width < xl),
-        takeUntil(this.destroy$),
-      )
-      .subscribe((isLessThanXl: boolean) => this.userPictureOnly = isLessThanXl);
+    // const { xl } = this.breakpointService.getBreakpointsMap();
+    // this.themeService.onMediaQueryChange()
+    //   .pipe(
+    //     map(([, currentBreakpoint]) => currentBreakpoint.width < xl),
+    //     takeUntil(this.destroy$),
+    //   )
+    //   .subscribe((isLessThanXl: boolean) => this.userPictureOnly = this.user.picture);
 
     this.themeService.onThemeChange()
       .pipe(

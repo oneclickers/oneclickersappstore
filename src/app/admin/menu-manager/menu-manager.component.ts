@@ -25,4 +25,13 @@ export class MenuManagerComponent implements OnInit {
     console.log("menu",this.router_Name);
     
   }
+  onKeyUpEvent(event:any){
+
+  }
+  AddNewMenu(){
+
+  }
+  onChange(data:any){
+
+  }
 }

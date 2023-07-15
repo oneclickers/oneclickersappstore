@@ -31,9 +31,15 @@
       <nb-search type="rotate-layout"></nb-search>
     </nb-action> -->
     <nb-action class="control-item" [nbContextMenu]="noteBad" icon="edit-2-outline"></nb-action>
-    <nb-action class="control-item"  [nbContextMenu]="message" icon="message-circle-outline"></nb-action>
-    <nb-action class="control-item" icon="email-outline"></nb-action>
-    <nb-action class="control-item" icon="bell-outline"></nb-action>
+    <nb-action class="control-item"  badgeText="2"
+    badgePosition="top right"
+    badgeStatus="success" [nbContextMenu]="message" icon="message-circle-outline"></nb-action>
+    <nb-action class="control-item" [nbContextMenu]="email" 
+    badgePosition="top right"
+    badgeStatus="success" icon="email-outline"></nb-action>
+    <nb-action class="control-item"  badgeText="new"
+    badgePosition="top right"
+    badgeStatus="success" icon="bell-outline"></nb-action>
     <!-- <nb-action class="user-action" *nbIsGranted="['view', 'user']" >
       <nb-user [nbContextMenu]="userMenu"
                [onlyPicture]="userPictureOnly"

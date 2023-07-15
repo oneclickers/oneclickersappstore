@@ -46,14 +46,15 @@ return;
 }
 this.userService.login(this.loginFrom.value).subscribe((res:any)=>{
   if(res.statuscode===200){
-    console.log('loginInfo',res.data);
-   this.hostservice.setAuth(res.token);
-   this.hostservice.setUserInfo({userName:res.username,userID:res.userId})
-   this.hostservice.setMenu(res.data);
-   this.router.navigate(['/Admin/Dashboard'])
-   this.message.success('Success',res.message,{
+    this.message.success('Success',res.message,{
       status:'success'
     })
+    console.log('loginInfo',res.data);
+   this.hostservice.setAuth(res.token);
+   this.hostservice.setUserInfo({userName:res.username,userID:res.userId,picture:res.picture,name:res.name})
+   this.hostservice.setMenu(res.data);
+   this.router.navigate(['/Admin/Dashboard'])
+
 
   }
   else{

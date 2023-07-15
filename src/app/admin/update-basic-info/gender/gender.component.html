@@ -1,0 +1,81 @@
+<nb-card class="shadow pb-0 mb-1 p-3 bg-white rounded mt-0">
+    <div class="row p-0 m-0">
+        <div class="col-12 col-xl-3 col-lg-3 col-md-3 col-sm-3 p-0 m-0">
+            <h4 class="p-0 m-0 d-flex">
+                <span class="d-flex" *ngFor="let routerName of this.router_Name;let i=index">
+                    <span>
+                        <span *ngIf="i!=0" class="pl-1 pr-1">|</span>
+                        <span style="font-size:17px !important;"
+                            [ngClass]="i==1? 'text-primary':'text-secondary'">{{routerName}}</span>
+                    </span>
+                </span>
+            </h4>
+        </div>
+        <div class="col-12 col-xl-5 col-lg-5 col-md-5 col-sm-5 p-0">
+            <!-- <span><i class="bi bi-search" style="    position: fixed;
+            position: absolute;
+            font-size: 16px !important;
+width: 40px;
+padding: 6px 30px 6px 20px;
+border-top-left-radius: 5px;
+border-bottom-left-radius: 5px;
+border-right: 2px solid gray;
+margin: 4px 0px;cursor: pointer;"></i></span>
+            <input type="text" (keyup)="onKeyUpEvent($event)"
+                style="background-color: whitesmoke !important ;font-size: 13px !important;height: 40px;    padding-left: 75px;"
+                status="basic" placeholder="Search....." class="shadow-lg form-control"> -->
+
+        </div>
+        <div class="col-12 col-xl-3 col-lg-3 col-md-3 col-sm-3 pr-0">
+            <!-- <nb-select style="font-size: 13px !important;" (selectedChange)="onChange($event)" fullWidth
+                class="shadow-lg" placeholder="Select Roll">
+                <nb-option style="font-size: 13px !important;" value=""></nb-option>
+            </nb-select> -->
+        </div>
+        <div class="col-12 col-xl-1 col-lg-1 col-md-1 col-sm-1 p-0 m-0">
+            <div class="text-right">
+                <button size="medium" nbButton hero status="primary" (click)="AddNewMenu()"><nb-icon
+                        icon="plus-outline"></nb-icon></button>
+            </div>
+        </div>
+    </div>
+</nb-card>
+<nb-card class="shadow mb-0" style="min-height: 75vh;">
+    <nb-card-body class="p-0">
+                <div class="container bootstrap snippets bootdey p-0">
+                    <div class="table-responsive">
+                        <table class="table colored-header datatable project-list shadow" style="font-size: 13px !important;" >
+                            <thead>
+                                <tr>
+                                    <th>Sno</th>
+                                    <th>Gender</th>
+                                    <th>Description</th>
+                                    <th>Modify</th>
+                                </tr>
+                            </thead>
+                            <tbody style="text-align: left;">
+                                <tr  *ngFor="let gender of this.GenderList;let i=index">
+                                    <td style="font-weight: bold;">{{i+1}}</td>
+                                    <td class="text-primary" style="font-weight: bold;">{{gender.gender_type}}</td>
+                                    <td>{{gender.description}}</td>
+                                    <td>
+                                        <nb-button-group style="height: 30px; " class="shadow">
+                                            <button (click)="editExistsRoll(gender)" class="shadow"  nbButton hero status="primary"><nb-icon
+                                                    icon="edit-outline"></nb-icon></button>
+                                            <button (click)="deleteRoll(gender.id,gender.gender_type)" class="shadow" nbButton hero status="warning"><nb-icon
+                                                    icon="trash-outline"></nb-icon></button>
+                                        </nb-button-group>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- <div class="text-right">
+                        <button nbButton size="small" hero class="shadow" status="primary" (click)="addNewRoll()"><nb-icon icon="plus-outline"></nb-icon>ADD ROLL</button>
+                    </div> -->
+                </div>
+    
+
+    </nb-card-body>
+</nb-card>
