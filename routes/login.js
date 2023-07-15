@@ -7,28 +7,24 @@ const cryptr = new Cryptr('myTotallySecretKey');
 
 router.post('/', (req, res) => {
   
-    var Query=`Select * from users`
+    var Query=`Select * from users where email_Id="${req.body.email_Id}" && password="${req.body.password}"`
     DB.query(Query, (err, result) => {
       if (err) { console.log("errorresponse", err); return JSON.stringify(err); }
       else {
-        var user= result.findIndex((element)=>element.email_Id===req.body.email_Id&&element.password===req.body.password)
-        console.log("userInfo",user);
-        if(user<=-1) res.status(200).json({statuscode:409,message:'Login Faild'})
+          if (err) {console.log("errorresponse", err); return JSON.stringify(err); }
+        else if(result.length<=0) res.status(200).json({statuscode:409,message:'Login Faild'})
         else{
           let data = {
             time: Date(),
-            userId: result[user].user_Id,
+            userId: result[0].user_Id,
         }
-        var Query1=`Select * from menu`
+        var Query1=`select * from menu where accessInts= ${result[0]['roll_Id']} order by short ASC;`
         DB.query(Query1, (err, menuresult) => {
-          if (err) { console.log("errorresponse", err); return JSON.stringify(err); }
+          if (err) {console.log("errorresponse", err); return JSON.stringify(err); }
           else {
             var menu=[]
             var  childrens=[]
             menuresult.filter((menuInfo)=>{
-              var accessIntArray=menuInfo.accessInts.split(",")
-              console.log("accessid",accessIntArray,accessIntArray.includes(result[user].roll_Id));
-              if(accessIntArray.includes(result[user].roll_Id.toString())){
                   if(menuInfo.parentInt===null){
                     menuresult.filter((child)=>{
                       if(child.parentInt==menuInfo.id){
@@ -56,11 +52,10 @@ router.post('/', (req, res) => {
                       })
                     }
                   }
-              }
+              
             })
-            console.log("menu",menu);
             const token = jwt.sign(data, 'gfg_jwt_secret_key');
-            res.status(200).json({ statuscode: 200, message: 'Login Success',token:token,data:menu,userId:result[user].user_Id,username:result[user].email_Id})
+            res.status(200).json({ statuscode: 200, message: 'Login Success',token:token,data:menu,userId:result[0].user_Id,username:result[0].email_Id,picture:result[0].photo,name:result[0].name})
           }})
         }
       }

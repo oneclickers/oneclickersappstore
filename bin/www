@@ -32,6 +32,9 @@ const io = require('socket.io')(server, {
 //     io:io
 // }
 // console.log('called')
+
+
+
 io.on('connection', (socket) => {
 
   console.log('called')
@@ -39,105 +42,143 @@ io.on('connection', (socket) => {
     var senderId = userInfo;
 
     console.log('userid', userInfo);
-    var Query = `SELECT * from message where sender_Id=${userInfo} || receiver_id=${userInfo}`
+    var Query = `SELECT DISTINCT receiver_id,sender_Id from message where sender_Id=${userInfo} || receiver_id=${userInfo}`
     DB.query(Query, (err, result) => {
       if (err) { console.log("errorresponse", err); }
       else {
+        var CheckDuplicste=[];
         console.log("messagetable", result);
+          result.forEach((member)=>{
+            console.log("object",member.receiver_id);
+            CheckDuplicste.push(member.receiver_id)
+            CheckDuplicste.push(member.sender_Id)
+          })
+          CheckDuplicste= CheckDuplicste.filter((item,
+            index) => CheckDuplicste.indexOf(item) === index)
+          console.log("CheckDuplicste", CheckDuplicste);
+            CheckDuplicste.splice(CheckDuplicste.findIndex((id)=>id===userInfo), 1)
+            console.log('after removing userid',CheckDuplicste);
 
-        if (result.length > 0) {
-          var memberList = [];
-          var i
-          var testUser=[]
-          var test=[]
-          result.forEach((element) => {
-            var Query1 = `Select * from users where user_Id=${element.sender_Id} ||user_Id=${element.receiver_id}`
+var memberList=[]
+              for(i = 0; i < CheckDuplicste.length; i++) {
+            var Query1 = `Select * from users where user_Id=${CheckDuplicste[i]}`
             DB.query(Query1, (err, result1) => {
               if (err) { console.log("errorresponse", err); }
               else {
-                if (testUser.length>0) {
-                  if (testUser.findIndex((data)=>data!=result1[0].user_Id)===-1) {
 
-                    console.log('memberList data');
-                    memberList.push(
-                      {
-                        name: result1[0].name,
-                        id: result1[0].user_Id,
-                        photo: result1[0].photo
-                      }
-                    )
+                memberList.push(
+                  {
+                    name: result1[0].name,
+                    id: result1[0].user_Id,
+                    photo: result1[0].photo
                   }
-                 
-                }else{
-                  console.log("test",result1);
-                  if (result1[0].user_Id!=userInfo) {
-                    testUser.push(result1[0].user_Id) 
-                    memberList.push(
-                      {
-                        name: result1[0].name,
-                        id: result1[0].user_Id,
-                        photo: result1[0].photo
-                      }
-                    )
-                    console.log("testOne",testUser);
-                  }
-                }
-
-               
+                )
+                console.log("output",result1[0]);
+                io.emit('getChatMemberList', memberList);
               }
             })
-          }); 
-          io.emit('getChatMemberList', memberList);
-          // for(i = 0; i < result.length; i++) {
-          //   var Query1 = `Select * from users where user_Id=${result[i].receiver_id}`
-          //   DB.query(Query1, (err, result1) => {
-          //     if (err) { console.log("errorresponse", err); }
-          //     else {
-          //       if (testUser.length>0) {
-          //         if (testUser.findIndex((data)=>data===result1[0].user_Id)===-1) {
-          //           memberList.push(
-          //             {
-          //               name: result1[0].name,
-          //               id: result1[0].user_Id,
-          //               photo: result1[0].photo
-          //             }
-          //           )
-          //         }
+          }
+        
+        // if (result.length > 0) {
+        //   var memberList = [];
+        //   var i
+        //   var testUser=[]
+        //   var test=[]
+        //   result.forEach((element) => {
+        //     var Query1 = `Select * from users where user_Id=${element.sender_Id} ||user_Id=${element.receiver_id}`
+        //     DB.query(Query1, (err, result1) => {
+        //       if (err) { console.log("errorresponse", err); }
+        //       else {
+        //         result1.forEach((res)=>{
+        //           if (testUser.length>0) {
+        //             if (testUser.findIndex((data)=>data!=res.user_Id)===-1) {
+  
+        //               console.log('memberList data');
+        //               memberList.push(
+        //                 {
+        //                   name: res.name,
+        //                   id: res.user_Id,
+        //                   photo: res.photo
+        //                 }
+        //               )
+        //             }
+                   
+        //           }else{
+        //             console.log("test",result1);
+        //             if (res.user_Id!=userInfo) {
+        //               testUser.push(res.user_Id) 
+        //               memberList.push(
+        //                 {
+        //                   name: res.name,
+        //                   id: res.user_Id,
+        //                   photo: res.photo
+        //                 }
+        //               )
+        //               console.log("testOne",testUser);
+        //             }
+        //           }
+                
+        //             io.emit('getChatMemberList', memberList);
+        //         })
+             
+
+               
+        //       }
+        //     })
+        //   }); 
+          
+        //   // for(i = 0; i < result.length; i++) {
+        //   //   var Query1 = `Select * from users where user_Id=${result[i].receiver_id}`
+        //   //   DB.query(Query1, (err, result1) => {
+        //   //     if (err) { console.log("errorresponse", err); }
+        //   //     else {
+        //   //       if (testUser.length>0) {
+        //   //         if (testUser.findIndex((data)=>data===result1[0].user_Id)===-1) {
+        //   //           memberList.push(
+        //   //             {
+        //   //               name: result1[0].name,
+        //   //               id: result1[0].user_Id,
+        //   //               photo: result1[0].photo
+        //   //             }
+        //   //           )
+        //   //         }
                  
-          //       }else{
-          //         if (result1[0].user_Id!=userInfo) {
-          //           testUser.push(result1[0].user_Id) 
-          //           memberList.push(
-          //             {
-          //               name: result1[0].name,
-          //               id: result1[0].user_Id,
-          //               photo: result1[0].photo
-          //             }
-          //           )
-          //           console.log("testOne",testUser);
-          //         }
-          //       }
+        //   //       }else{
+        //   //         if (result1[0].user_Id!=userInfo) {
+        //   //           testUser.push(result1[0].user_Id) 
+        //   //           memberList.push(
+        //   //             {
+        //   //               name: result1[0].name,
+        //   //               id: result1[0].user_Id,
+        //   //               photo: result1[0].photo
+        //   //             }
+        //   //           )
+        //   //           console.log("testOne",testUser);
+        //   //         }
+        //   //       }
 
-          //       if (i === result.length) {
-          //         io.emit('getChatMemberList', memberList);
-          //       }
+        //   //       if (i === result.length) {
+        //   //         io.emit('getChatMemberList', memberList);
+        //   //       }
 
-          //     }
-          //   })
-          // }
+        //   //     }
+        //   //   })
+        //   // }
 
-        }
+        // }
       }
     })
 
   });
 
-  socket.on('disconnect', function () {
-    io.emit('usersActivity', {
-      user: socket.username,
-      event: 'chatLeft'
-    });
-  });
+
+
+   socket.on('disconnect', function() {
+      console.log('Got disconnect!');
+messag=[]
+      // var i = messag.indexOf(socket);
+      // delete messag[i];
+   });
 
   socket.on('setUserName', (name) => {
     socket.username = name;
@@ -164,12 +205,23 @@ io.on('connection', (socket) => {
 
   socket.on('message', (messages) => {
     console.log(messages);
-    var Query = `insert into message(message,files,sender_Id,receiver_id,view_Status,date) value ('${messages.message}','${null}',${messages.senderID},${messages.receiverID},${messages.view_Status},'${'2008-11-11'}')`
+var dateTime=new Date()
+ var y=dateTime.getFullYear();
+  var m=dateTime.getMonth()+1;
+  var d=dateTime.getDate();
+  var T=dateTime.getHours();
+  var m=dateTime.getMinutes();
+  var ap=T>=12?"PM":"AM"
+  var dateAndTime= `${d}-${m}-${y},${T}:${m} ${ap}`
+console.log("date and Time",dateAndTime);
+    var Query = `insert into message(message,files,sender_Id,receiver_id,view_Status,date) value ('${messages.message}','${null}',${messages.sender_Id},${messages.receiver_id},${messages.view_Status},'${new Date()}')`
     DB.query(Query, (err, result) => {
       if (err) { console.log("errorresponse", err); }
       else {
+      
         messages.date = new Date()
         io.emit('message', messages);
+        messages={}
       }
 
     })

@@ -6,7 +6,7 @@ const cryptr = new Cryptr('myTotallySecretKey');
 
 // genderRoute
 router.get('/', (req, res, next)=>{
-    var Query=`Select * from gender`
+    var Query=`Select * from inputFielDateType`
     DB.query(Query,(err,result)=>{
       if(err){    console.log("errorresponse",err);return JSON.stringify(err);}
       else{

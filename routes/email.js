@@ -1,10 +1,10 @@
 var express = require('express');
+var email = require('nodemailer');
 var router = express.Router();
 var DB=require("../databaseConnection")
 const Cryptr = require('cryptr');
 const cryptr = new Cryptr('myTotallySecretKey');
 
-// genderRoute
 router.get('/', (req, res, next)=>{
     var Query=`Select * from gender`
     DB.query(Query,(err,result)=>{
@@ -25,26 +25,33 @@ router.get('/', (req, res, next)=>{
   });
 
   router.post('/', (req, res) => {
-    console.log("req", req);
-    var Query = `insert into gender(gender_type,description) values('${req.body.gender_type}','${req.body.description}')`
-    DB.query(Query, (err, result) => {
-        if (err) { console.log("errorresponse", err); return JSON.stringify(err); }
-        else res.status(200).json({ statuscode: 200, message: 'Gender Created Successfully!' })
-    })
-  })
-  
-  router.put('/', (req, res) => {
-    console.log("req", req);
-    var Query = `UPDATE gender SET 
-    gender_type='${req.body.gender_type}',
-    description=${req.body.description},
-    WHERE id=${req.body.user_Id}`
-    DB.query(Query, (err, result) => {
-        if (err) { console.log("errorresponse", err); return JSON.stringify(err); }
-        else res.status(200).json({ statuscode: 200, message: 'Gender Details Updated Successfully!' })
-    })
-  })
+    var sender=email.createTransport({
+        service:'gmail',
+        auth:{
+            user:req.body.from,
+            pass:req.body.password
+        }
+    });
 
+    var composemail={
+        from:req.body.from,
+        to:req.body.to,
+        subject:req.body.subject,
+        text:req.body.body
+    };
+    sender.sendMail(composemail,(err,result)=>{
+        if(err){
+            console.log("error",err);
+        }
+        else{
+            var Query = `insert into email(senderId,receiverId,emailFrom,emailTo,cc,bcc,subject,body) values(${req.body.senderId},${req.body.receiverId},'${req.body.from}','${req.body.to}','${req.body.cc}','${req.body.bcc}','${req.body.subject}','${req.body.body}')`
+            DB.query(Query, (err, result) => {
+                if (err) { console.log("errorresponse", err); return JSON.stringify(err); }
+                else res.status(200).json({ statuscode: 200, message: 'Email Sended Successfully!' })
+            }) 
+        }
+    })
+  })
 
   router.delete('/:genderID', (req, res) => {
     console.log("req", req.params.roll_Id);

@@ -28,7 +28,15 @@ var userRollRouter = require('./routes/users_Roll');
 var loginRouter = require('./routes/login');
 var genderRouter = require('./routes/gender')
 var menuRouter = require('./routes/menu')
-// var messageRouter = require('./routes/message')
+var dynamicUIRouter = require('./routes/dynamicui')
+var emailRouter = require('./routes/email')
+var inputTypeRouter = require('./routes/inputType')
+var inputDataTypeRouter = require('./routes/inputDataType')
+var CountryRouter = require('./routes/country')
+var StateRouter = require('./routes/state')
+var DistrictRouter = require('./routes/district')
+var cityRouter = require('./routes/city')
+
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
 app.use('/login', loginRouter);
@@ -36,7 +44,15 @@ app.use('/userroll', userRollRouter);
 app.use('/register', registerRouter);
 app.use('/gender', genderRouter);
 app.use('/menu', menuRouter);
-// app.use('/message',messageRouter.io.attach(express))
+app.use('/dynamicui', dynamicUIRouter);
+app.use('/email', emailRouter);
+app.use('/inputType', inputTypeRouter);
+app.use('/inputDataType', inputDataTypeRouter);
+app.use('/country', CountryRouter);
+app.use('/state', StateRouter);
+app.use('/district', DistrictRouter);
+app.use('/city', cityRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

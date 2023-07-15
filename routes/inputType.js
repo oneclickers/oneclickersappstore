@@ -6,7 +6,7 @@ const cryptr = new Cryptr('myTotallySecretKey');
 
 // genderRoute
 router.get('/', (req, res, next)=>{
-    var Query=`Select * from gender`
+    var Query=`Select * from inputFielType`
     DB.query(Query,(err,result)=>{
       if(err){    console.log("errorresponse",err);return JSON.stringify(err);}
       else{
@@ -15,7 +15,7 @@ router.get('/', (req, res, next)=>{
     })
   });
   router.get('/:id', (req, res, next)=>{
-    var Query=`Select * from gender where id=${id}`
+    var Query=`Select * from inputFielType where id=${id}`
     DB.query(Query,(err,result)=>{
       if(err){    console.log("errorresponse",err);return JSON.stringify(err);}
       else{
@@ -26,7 +26,7 @@ router.get('/', (req, res, next)=>{
 
   router.post('/', (req, res) => {
     console.log("req", req);
-    var Query = `insert into gender(gender_type,description) values('${req.body.gender_type}','${req.body.description}')`
+    var Query = `insert into inputFielType(name,description,sort,createdBy,cretedDate) values('${req.body.input_type}','${req.body.description}','${req.body.sort}','${req.body.createdBy}','${new Date()}')`
     DB.query(Query, (err, result) => {
         if (err) { console.log("errorresponse", err); return JSON.stringify(err); }
         else res.status(200).json({ statuscode: 200, message: 'Gender Created Successfully!' })
